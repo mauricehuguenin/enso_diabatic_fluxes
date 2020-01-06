@@ -10,9 +10,14 @@ Maurice F. Huguenin(1,2), Ryan M. Holmes (2,3) and Matthew H. England (2)
 3 School of Mathematics and Statistics, University of New South Wales, New South Wales 2052, Australia 
 
 ----
-To import and visualize the model output in Matlab, I use the following two packages available online:
-- the [CSIRO netCDF/OPeNDAP](http://www.marine.csiro.au/sw/matlab-netcdf.html) interface
-- the [cbrewer](https://www.mathworks.com/matlabcentral/fileexchange/34087-cbrewer-colorbrewer-schemes-for-matlab) package 
+To import and visualize the model output in Matlab, I use the following packages available online:
+
+- the [CSIRO netCDF/OPeNDAP](http://www.marine.csiro.au/sw/matlab-netcdf.html) interface to import .nc data with the getnc() function
+
+- the [cbrewer](https://www.mathworks.com/matlabcentral/fileexchange/34087-cbrewer-colorbrewer-schemes-for-matlab) package for custom colours. Copyright (c) 2015, Charles Robert. All rights reserved.
+
+- the [m_map](https://www.eoas.ubc.ca/~rich/map.html) package to visualize spatial maps. Pawlowicz, R., 2019. "M_Map: A mapping package for MATLAB", version 1.4k, [Computer software], available online at www.eoas.ubc.ca/~rich/map.html.
+
 
 
 
