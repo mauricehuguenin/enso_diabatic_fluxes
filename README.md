@@ -11,7 +11,9 @@ Maurice F. Huguenin(1,2), Ryan M. Holmes (2,3) and Matthew H. England (2)
 
 ----
 
-To import and visualize the model output in Matlab, I use the following packages available online:
+# Packages and Functions
+
+I use the following packages which are publicly available online:
 
 - the [CSIRO netCDF/OPeNDAP](http://www.marine.csiro.au/sw/matlab-netcdf.html) interface to import .nc data with the getnc() function
 
@@ -19,20 +21,17 @@ To import and visualize the model output in Matlab, I use the following packages
 
 - the [m_map](https://www.eoas.ubc.ca/~rich/map.html) package to visualize spatial maps. Pawlowicz, R., 2019. "M_Map: A mapping package for MATLAB", version 1.4k, [Computer software], available online at www.eoas.ubc.ca/~rich/map.html.
 
-
-
-
 # List of Figures and their Analysis Scripts
 
-__Fig. 1__: Fig1_wind_stress_regression_enso.m, import and visualize data from /data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace
+__Fig. 1__: Import saved data from the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace and visualize in Fig1_wind_stress_regression_enso.m
 
-__Fig. 2__: Fig2_idealized_symmetric_timeseries.m
+__Fig. 2__: Import data from workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in Fig2_idealized_symmetric_timeseries.m
 
-__Fig. 3__: visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace
+__Fig. 3__: Visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace with __INSERT_SCRIPT_NAME_HERE__.m
 
-__Fig. 4__: 
+__Fig. 4__: Using Fig4_timeseries_nino34_and_wwv_and_taux_and_nsfc.m to plot climate indices
 
-__Fig. 5__: 
+__Fig. 5__: Fig5_timeseries_wwv_transport_clim.m used for plotting the climatological WWV budget
 
 ----
 
