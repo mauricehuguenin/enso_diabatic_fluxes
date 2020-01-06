@@ -9,6 +9,10 @@ Maurice F. Huguenin(1,2), Ryan M. Holmes (2,3) and Matthew H. England (2)
 
 3 School of Mathematics and Statistics, University of New South Wales, New South Wales 2052, Australia 
 
+----
+To import and visualize the model output in Matlab, I use the following two packages available online:
+- the (CSIRO netCDF/OPeNDAP)[http://www.marine.csiro.au/sw/matlab-netcdf.html] interface
+- the (cbrewer)[https://www.mathworks.com/matlabcentral/fileexchange/34087-cbrewer-colorbrewer-schemes-for-matlab] package 
 
 # Filename explanation
 
