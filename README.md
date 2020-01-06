@@ -16,7 +16,7 @@ To import and visualize the model output in Matlab, I use the following two pack
 
 
 
-# List of Figures
+# List of Figures and their Analysis Scripts
 
 __Fig. 1__: Fig1_wind_stress_regression_enso.m, import and visualize data from /data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace
 
@@ -52,7 +52,7 @@ __Fig. 13__:
 
 __Fig. 14__: Create lag regression with Fig14_lag_regression_of_wwv_terms_and_N34.m while loading in the saved time series from the data/WMT_time_series_1979-2016.mat workspace
 
-__Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python (Fig15_visualizing_script_barplot.py) and then add the individual bar plots together in Fig15_barplot_wwv_contributing_terms.pptx. Fig15_visualizing_script_barplot.py acts as an example, the scripts for the five other events are virtually identical (except for the data which I inserted). I choose this approach with eight different scripts as it was the fastest.
+__Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python (Fig15_visualizing_script_barplot.py) and then add the individual bar plots together in Fig15_barplot_wwv_contributing_terms.pptx. Fig15_visualizing_script_barplot.py acts as an example, the scripts for the five other events are, except for the hard-coded data, identical. I choose this approach with a separate script for each event as it was the fastest that worked the first time.
 
 
 # Data folder
