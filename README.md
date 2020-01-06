@@ -10,6 +10,7 @@ Maurice F. Huguenin(1,2), Ryan M. Holmes (2,3) and Matthew H. England (2)
 3 School of Mathematics and Statistics, University of New South Wales, New South Wales 2052, Australia 
 
 ----
+
 To import and visualize the model output in Matlab, I use the following packages available online:
 
 - the [CSIRO netCDF/OPeNDAP](http://www.marine.csiro.au/sw/matlab-netcdf.html) interface to import .nc data with the getnc() function
@@ -25,7 +26,7 @@ To import and visualize the model output in Matlab, I use the following packages
 
 __Fig. 1__: Fig1_wind_stress_regression_enso.m, import and visualize data from /data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace
 
-__Fig. 2__: 
+__Fig. 2__: Fig2_idealized_symmetric_timeseries.m
 
 __Fig. 3__: visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace
 
@@ -33,8 +34,7 @@ __Fig. 4__:
 
 __Fig. 5__: 
 
-
-
+----
 
 __Fig. 6__: 
 
@@ -46,8 +46,7 @@ __Fig. 9__: Fig9_discharge_and_recharge_schematics.pptx shows the schematics wit
 
 __Fig. 10__: 
 
-
-
+----
 
 __Fig. 11__: 
 
@@ -64,3 +63,5 @@ __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_s
 
 - __plotting_all_PC1_and_PC2_patterns_rev1.mat__ contains data for all spatial regression patterns
 - __WMT_time_series_1979-2016.mat__ contains the time series of Fig. 12 as well as the table for the contributions of all terms over the discharge and recharge periods
+- __workspace_regression_patterns_PC1_equal_nino34_rev2.mat__ contains the spatial patterns and time series for Fig. 1
+- __workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat__ contains the saved variables for Fig. 3
