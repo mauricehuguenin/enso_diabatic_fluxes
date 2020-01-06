@@ -14,9 +14,13 @@ To import and visualize the model output in Matlab, I use the following two pack
 - the (http://www.marine.csiro.au/sw/matlab-netcdf.html)[CSIRO netCDF/OPeNDAP] interface
 - the (https://www.mathworks.com/matlabcentral/fileexchange/34087-cbrewer-colorbrewer-schemes-for-matlab)[cbrewer] package 
 
+[linked phrase](http://example.com)
+
+
+
 # Filename explanation
 
-- __Fig1_test.m__ is the script I use to create the spatial patterns from the workspace... 
+- __Fig1_wind_stress_regression_enso.m__: import and visualize spatial maps and time series from the EOF-based regression analysis saved in the /data/workspace_regression_patterns... file
 
 
 # Data folder
