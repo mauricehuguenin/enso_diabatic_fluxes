@@ -16,37 +16,43 @@ To import and visualize the model output in Matlab, I use the following two pack
 
 
 
-# Filename explanation
+# List of Figures
 
-- __Fig1_wind_stress_regression_enso.m__: import and visualize spatial maps and time series from the EOF-based regression analysis saved in the /data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace
+__Fig. 1__: Fig1_wind_stress_regression_enso.m, import and visualize data from /data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace
 
-- __Fig2.m__:
+__Fig. 2__: 
 
-- __Fig3_.m__: visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace
+__Fig. 3__: visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace
 
-- __Fig4.m__:
+__Fig. 4__: 
 
-- __Fig5.m__:
+__Fig. 5__: 
 
-- __Fig6.m__:
 
-- __Fig7.m__:
 
-- __Fig8.m__:
 
-- __Fig9_discharge_and_recharge_schematics.pptx__: schematics for the discharge and recharge periods drawn in powerpoint
+__Fig. 6__: 
 
-- __Fig10.m__:
+__Fig. 7__: 
 
-- __Fig11.m__:
+__Fig. 8__: 
 
-- __Fig12.m__:
+__Fig. 9__: Fig9_discharge_and_recharge_schematics.pptx shows the schematics with data extracted from ..... drawn in powerpoint
 
-- __Fig13.m__:
+__Fig. 10__: 
 
-- __Fig14.m__:
 
-- __Fig15_barplot_wwv_contributing_terms.pptx__: barplot of WWV contributing terms drawn in powerpoint
+
+
+__Fig. 11__: 
+
+__Fig. 12__: 
+
+__Fig. 13__: 
+
+__Fig. 14__: 
+
+__Fig. 15__: Fig15_visualizing_script_barplot.py is the python script to plot the contributing bars which are then added together in Fig15_barplot_wwv_contributing_terms.pptx
 
 
 
