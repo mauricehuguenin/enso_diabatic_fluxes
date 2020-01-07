@@ -23,7 +23,7 @@ I use the following packages which are publicly available online:
 
 # List of Figures and their Analysis Scripts
 
-EOF_based_regression_analysis_of_wind_stress_anomalies.m describes the regression analysis of wind stress anomalies in the equatorial Pacific as in McGregor et al., 2014.
+__Regression Analysis__: EOF_based_regression_analysis_of_wind_stress_anomalies.m describes the regression analysis of wind stress anomalies in the equatorial Pacific as in McGregor et al., 2014.
 
 __Fig. 1__: Visualize data from the regression analysis stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
 
