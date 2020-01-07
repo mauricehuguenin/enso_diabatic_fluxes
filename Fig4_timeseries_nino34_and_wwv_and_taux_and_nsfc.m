@@ -1,37 +1,31 @@
-%% EXP1: Plotting latitude integrated OHCa during December of the first year
+%% Plotting time series of idealized El Nino and La Nina simulations,
+% i.e. GMSST and OHC as well as N34 and WWV anomalous time series
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  %
-%                                                                         %
 %                     hmaurice, 23.11.2017, 10:19 AEST                    %
-%                                                                         %
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  %
 
 
-% load workspace
 f1 = 'pnEXP1_and_pnEXP2_timeseries_nino34_and_wwv_and_taux_and_nsfc';
 f2 = 'pnEXP1_and_pnEXP2_timeseries_nino34_and_wwv_and_taux_and_nsfc_ensemble difference';
 srv = 'E:\2017 Herbstsemester\Application Paper\AMS LaTeX Package v4.3.2\matlab_scripts_and_powerpoint_to_create_figures\'
+% load workspace data
 load([srv 'workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat']);
 load(['H:/Maurice_ENSO_Data/workspace_EXP1_analysis_composite_ninos_rev3'])
-antarctica = nature;
+% colours
+antarctica = nature; % antarctica colour bar
 RdBu_short = cbrewer('div', 'RdBu', 21, 'PCHIP');
 Reds = cbrewer('seq', 'Reds', 16, 'PCHIP');
 Blues = cbrewer('seq', 'Blues', 16, 'PCHIP');
 
-% loading in symmetric Nino3.4 and PC2
-% load('workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric');
 plot(linspace(1,24, 2920), pnnino_comp_highres(1,:)); hold on; 
 plot(linspace(1,24, 2920), pnnino_comp_highres(2,:)); hold on;
 
 
 %% preamble and data preparation
-                 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %                  
-                 % location_tahiti        = [523, 427] %
-                 % location_center_nino34 = [540, 498] %
-                 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
-  
 
-for schlaufe = 1:2
+
+for schlaufe = 1:2 % loop over El Nino and La Nina events
 tic 
     if schlaufe == 1
        first = 'pnEXP1_composite_nino_windstress'; 
@@ -52,6 +46,7 @@ p3 = ['H:/Maurice_ENSO_Data/' first '/output002/'];
 p4 = ['H:/Maurice_ENSO_Data/' first '/output003/'];
 pc = 'H:/Maurice_ENSO_Data/EXP0_control_run/';
 
+% --- import potential temperature
 thetao_1 = squeeze(permute(getnc([p1 'ocean.nc'], 'temp', ...
          [1,1,478,440], [12,1,518,640], [1,1,1,1]), [4 3 2 1])); 
          % [month, depth, lat, lon], [end], [stride]
@@ -63,10 +58,12 @@ thetao_4 = squeeze(permute(getnc([p4 'ocean.nc'], 'temp', ...
          [1,1,478,440], [12,1,518,640], [1,1,1,1]), [4 3 2 1])); 
 thetaoc = squeeze(permute(getnc([pc 'ocean_clim.nc'], 'temp', ...
          [1,1,478,440], [12,1,518,640], [1,1,1,1]), [4 3 2 1])); 
+% concatenate across the time dimension and remove climatology to get anomalies     
 thetao = cat(3, thetao_1, thetao_2, thetao_3, thetao_4) - ...
     cat(3, thetaoc, thetaoc, thetaoc, thetaoc);
 clear thetao_1 thetao_2 thetao_3 thetao_4 thetao_5 thetao_6 thetaoc;
      
+% --- import practical salinity
 so_1 = squeeze(permute(getnc([p1 'ocean.nc'], 'salt', ...
          [1,1,478,440], [12,1,518,640], [1,1,1,1]), [4 3 2 1])); 
          % [month, depth, lat, lon], [end], [stride]
@@ -84,9 +81,6 @@ clear so_1 so_2 so_3 so_4 so_5 so_6 soc;
     
 
 cto = gsw_CT_from_pt(so,thetao); % convert potential to conservative temperature
-
-
-% testmap(lon(440:640,478:518), lat(440:640,478:518), cto(:,:,12));
 
 % create nino3.4 index for comparison with WWV
 if string == 'pnEXP1_restart000'
@@ -174,7 +168,7 @@ end
 s = nansum(reshape(volume, [720*41*50 48]));
 t = nansum(reshape(volumec, [720*41*50 48]));
 
-
+% create anomalous WWV and save as variable
 if string == 'pnEXP1_restart000'
     wwv_pnEXP1(1,:) = s-t;
 elseif string == 'pnEXP2_restart000'
@@ -234,83 +228,6 @@ elseif string == 'pnEXP2_restart000'
     net_sfc_global_pnEXP2(1,:) = net_sfc_global;
 end
 
-
-% % net surface heating anomaly over Pacific and Indian Ocean
-% load([srv 'workspace_EXP1_analysis_composite_ninos_rev3.mat'], 'wwv_mask');
-% 
-% % calculate net surface heating anomaly for pacific and indian region
-% % create mask for Pacific ocean region
-% mask_pacific = wwv_mask;
-% % create mask for Indian ocean region
-% mask = mask_pacific;
-% mask(mask==0) = 2;      % change values not in pacific region to 2
-% mask(mask~=2) = 0;      % change the in pacific to zero
-% mask(mask==2) = 1;      % change the values not in pacific region to 1
-%      
-% mask(:,581:end) = 0;     % all empty further north and south of 20S and 20N
-% mask(:,1:416) = 0;  
-% mask = mask .* squeeze(permute(getnc([p1 'ocean.nc'], 'tau_x', ...
-%          [1,1,1], [1,-1,-1], [1,1,1]), [3 2 1]));
-% mask(320:1200,:) = 0; 
-% mask(isnan(mask)) = 0;
-% mask(mask~=0) = 1;
-% mask_indian = mask; clear mask:
-% 
-% % testmap(lon, lat, mask_pacific);
-% % testmap(lon, lat, mask_indian);
-% % 
-% 
-% 
-% % load in net surface heating anomaly over the full globe
-% net_sfc_1 = permute(getnc([p1 'ocean.nc'], 'net_sfc_heating'), [3 2 1]);
-% net_sfc_2 = permute(getnc([p2 'ocean.nc'], 'net_sfc_heating'), [3 2 1]);
-% net_sfc_3 = permute(getnc([p3 'ocean.nc'], 'net_sfc_heating'), [3 2 1]);
-% net_sfc_4 = permute(getnc([p4 'ocean.nc'], 'net_sfc_heating'), [3 2 1]);
-% net_sfc = cat(3, net_sfc_1, net_sfc_2, net_sfc_3, net_sfc_4);
-% clear net_sfc_1 net_sfc_2 net_sfc_3 net_sfc_4;
-% 
-% net_sfcc = permute(getnc([pc 'ocean_clim.nc'], 'net_sfc_heating'), [3 2 1]);
-% net_sfcc = cat(3, net_sfcc, net_sfcc, net_sfcc, net_sfcc);
-% 
-% % creating anomalies
-% net_sfc = net_sfc - net_sfcc; clear net_sfcc;
-% 
-% 
-% if string == 'EXP5_restart000'
-%     net_sfc_global_EXP55 = squeeze(nansum(squeeze(nansum((net_sfc), 1)), 1));
-%     net_sfc_pacific_EXP5 = squeeze(nansum(squeeze(nansum((net_sfc .* mask_pacific), 1)), 1));
-%     net_sfc_indian_EXP5 = squeeze(nansum(squeeze(nansum((net_sfc .* mask_indian), 1)), 1));
-% elseif string == 'EXP1_and_EXP2_restart002'
-%     sst_EXP1_and_EXP2(2,:) = squeeze(nanmean(squeeze(nanmean(thetao,1)), 1));
-% elseif string == 'EXP1_and_EXP2_restart004'
-%     sst_EXP1_and_EXP2(3,:) = squeeze(nanmean(squeeze(nanmean(thetao,1)), 1));
-% elseif string == 'EXP1_and_EXP2_restart006'
-%     sst_EXP1_and_EXP2(4,:) = squeeze(nanmean(squeeze(nanmean(thetao,1)), 1));
-% elseif string == 'EXP1_and_EXP2_restart008'
-%     sst_EXP1_and_EXP2(5,:) = squeeze(nanmean(squeeze(nanmean(thetao,1)), 1));
-% elseif string == 'EXP3_and_EXP4_restart000'
-%    sst_EXP3_and_EXP4 = squeeze(nanmean(squeeze(nanmean(thetao,1)), 1));
-% end
-
-
-
-% % ok the issue here is that the global net_sfc_heating from ocean_scalar.nc
-% % and ocean.nc is not the same
-% subplot(2,1,1)
-% plot(net_sfc_global_EXP5); hold on;
-% legend('from ocean\_scalar.nc', 'location', 'southeast');
-% subplot(2,1,2)
-% plot(net_sfc_global_EXP55); hold on;
-% legend('from ocean.nc', 'location', 'southeast');
-% % % finished fancy plot
-% %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
-%     set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
-%     directory = '/home/z5180028/MSC_thesis/figures/';
-%     print('-dpng','-r1000', [directory 'ask_ryan_and_matt']);
-
-
-
-
 % GMSST with area-weighting
 area = permute(getnc([p1 'ocean_grid.nc'], 'area_t'), [2 1]);
 area_nan = area;
@@ -347,15 +264,6 @@ elseif string == 'pnEXP2_restart000'
     sst_pnEXP2(1,:) = sst;
 end
 
-
-
-
-
-
-
-
-
-
 % clean up  workspace before plotting
 
 clear ans bathymetry cto ctoc dzt dztc h7 h8 h9 lev_bnds;
@@ -371,103 +279,48 @@ clear area area_nan  basin_mask global_temp lat lon;
 clear net_sfc_global schlaufe sst wwv_mask_2S wwv_mask_2S_borneo;
 
 
-%% calculating max, min and mean of my ensembles
-% % tau_x anomaly
-% taux_EXP1_and_EXP2(6:9,:) = nan;
-%     % maximum of my ensembles
-%     [~,index] = max(taux_EXP1_and_EXP2(1:5,:));
-%     taux_EXP1_and_EXP2(7,:) = taux_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % minimum of my ensembles
-%     [~,index] = min(taux_EXP1_and_EXP2(1:5,:));
-%     taux_EXP1_and_EXP2(8,:) = taux_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % mean of my ensembles
-%     taux_EXP1_and_EXP2(9,:)= mean(taux_EXP1_and_EXP2(1:5,:));
-% 
-% % nino3.4 anomaly
-% mom_nino_EXP1_and_EXP2(6:9,:) = nan;
-%     % maximum of my ensembles
-%     [~,index] = max(mom_nino_EXP1_and_EXP2(1:5,:));
-%     mom_nino_EXP1_and_EXP2(7,:) = mom_nino_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % minimum of my ensembles
-%     [~,index] = min(mom_nino_EXP1_and_EXP2(1:5,:));
-%     mom_nino_EXP1_and_EXP2(8,:) = mom_nino_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % mean of my ensembles
-%     mom_nino_EXP1_and_EXP2(9,:)= mean(mom_nino_EXP1_and_EXP2(1:5,:));
-% 
-% % net sfc heating anomaly
-% net_sfc_global_EXP1_and_EXP2(6:9,:) = nan;
-%     % maximum of my ensembles
-%     [~,index] = max(net_sfc_global_EXP1_and_EXP2(1:5,:));
-%     net_sfc_global_EXP1_and_EXP2(7,:) = net_sfc_global_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % minimum of my ensembles
-%     [~,index] = min(net_sfc_global_EXP1_and_EXP2(1:5,:));
-%     net_sfc_global_EXP1_and_EXP2(8,:) = net_sfc_global_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % mean of my ensembles
-%     net_sfc_global_EXP1_and_EXP2(9,:)= mean(net_sfc_global_EXP1_and_EXP2(1:5,:));
-% 
-% % wwv anomaly
-% wwv_EXP1_and_EXP2(6:9,:) = nan;
-%     % maximum of my ensembles
-%     [~,index] = max(wwv_EXP1_and_EXP2(1:5,:));
-%     wwv_EXP1_and_EXP2(7,:) = wwv_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % minimum of my ensembles
-%     [~,index] = min(wwv_EXP1_and_EXP2(1:5,:));
-%     wwv_EXP1_and_EXP2(8,:) = wwv_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % mean of my ensembles
-%     wwv_EXP1_and_EXP2(9,:)= mean(wwv_EXP1_and_EXP2(1:5,:));
-% 
-% % sst anomaly
-% sst_EXP1_and_EXP2(6:9,:) = nan;
-%     % maximum of my ensembles
-%     [~,index] = max(sst_EXP1_and_EXP2(1:5,:));
-%     sst_EXP1_and_EXP2(7,:) = sst_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % minimum of my ensembles
-%     [~,index] = min(sst_EXP1_and_EXP2(1:5,:));
-%     sst_EXP1_and_EXP2(8,:) = sst_EXP1_and_EXP2(sub2ind([9 48],index,1:48));
-%     % mean of my ensembles
-%     sst_EXP1_and_EXP2(9,:)= mean(sst_EXP1_and_EXP2(1:5,:));
-
-
-%% new way to plot the time series, rev2
-
-
+%% plotting time series
+% initialize figure
 figure('units', 'pixels', 'position', [0 0 1920 1080]);
+
+% I have four subplots here, instead of a loop through 1:4 I instead opted
+% to copy-paste the code four times (not really good coding but it did the
+% job back then)
 
 % sst anomaly
 subplot(2,2,1)
-yyaxis left    
+yyaxis left % two time series in one plot with axis to the left and right   
+% --- plot time series: GMSST
 h5 = plot(linspace(1,48,48), sst_pnEXP1, 'color', RdYlBu(60,:), 'linewidth', 2.5); hold on;
 ylim([-0.15 0.15]);
-    hYLabel = ylabel(['[$^{\circ}$C]'],'interpreter','latex');
-    set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(60,:));
+hYLabel = ylabel(['[$^{\circ}$C]'],'interpreter','latex');
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(60,:));
 
-    % draw arrows to denote El Nino and La Nina events
-    arrow([1.1, 0.165], [4, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', RdYlBu(1,:));
-    arrow([21, 0.165], [23.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', RdYlBu(1,:));
-    text([4 4],[0.165 0.165],'El Ni\~no event', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(1,:));
-    
-    arrow([24.1, 0.165], [29, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', 'k');
-    arrow([43, 0.165], [47.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', 'k');
-    text([30 30],[0.165 0.165],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', 'k');
+% draw arrows to denote El Nino and La Nina events
+arrow([1.1, 0.165], [4, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', RdYlBu(1,:));
+arrow([21, 0.165], [23.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', RdYlBu(1,:));
+text([4 4],[0.165 0.165],'El Ni\~no event', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(1,:));
 
-%     arrow([24.1, 0.09], [27, 0.09], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', RdYlBu(60,:));
-%     arrow([45, 0.09], [47.9, 0.09], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', RdYlBu(60,:));
-%     text([28 28],[0.09 0.09],'La Ni\~na event', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
-    set(gca, ...
-      'Box'             , 'off'         , ...
-      'TickDir'         , 'out'         , ...
-      'TickLength'      , [.01 .01]     , ...
-      'XMinorTick'      , 'off'         , ...
-      'YMinorTick'      , 'off'         , ...
-      'YGrid'           , 'on'          , ...
-      'YTick'           , -0.15:0.05:0.15  , ...     % define grid, every 1000 m a grid line
-      'XColor'          , RdYlBu(60,:)  , ...
-      'YColor'          , RdYlBu(60,:)  , ...
-      'ticklabelinterpreter', 'latex'   , ...
-      'LineWidth'       , 1.25);
-      % 'GridLineStyle'   , '--'          , ...
+arrow([24.1, 0.165], [29, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', 'k');
+arrow([43, 0.165], [47.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', 'k');
+text([30 30],[0.165 0.165],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', 'k');
 
-yyaxis right
+set(gca, ...
+    'Box'             , 'off'         , ...
+    'TickDir'         , 'out'         , ...
+    'TickLength'      , [.01 .01]     , ...
+    'XMinorTick'      , 'off'         , ...
+    'YMinorTick'      , 'off'         , ...
+    'YGrid'           , 'on'          , ...
+    'YTick'           , -0.15:0.05:0.15  , ...     % define grid, every 1000 m a grid line
+    'XColor'          , RdYlBu(60,:)  , ...
+    'YColor'          , RdYlBu(60,:)  , ...
+    'ticklabelinterpreter', 'latex'   , ...
+    'LineWidth'       , 1.25);
+
+yyaxis right % two time series in one plot with axis to the left and right
+% --- plot time series: OHC as the cumulative integrated net surface heat
+% flux
 h3 = plot(linspace(1,48,48), cumtrapz(net_sfc_global_pnEXP1)* ...
     60*60*24*365.25*4*squeeze(nansum(squeeze(nansum(areacello, 1)), 2)), 'color', RdYlBu(20,:), 'linewidth', 2.5); hold on;
 set(gca, 'xtick',[]);
@@ -480,8 +333,8 @@ ylim([-3e23 3e23]);
     set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
     
     xlim([1 48]);
-%     
-     set(gca, ...
+
+    set(gca, ...
        'XColor'          , RdYlBu(60,:)  , ...
        'YColor'          , RdYlBu(60,:));
     set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 21);
@@ -490,67 +343,67 @@ ylim([-3e23 3e23]);
 text(-7, 4e23, 'a) El Ni\~no event', 'interpreter', 'latex', 'Fontsize', 30, ...
      'color', [0 0 0]);
 
- 
+% add legend
 h55 = legend([h5 h3 ], 'GMSST anomaly', 'OHC anonmaly', ...
     'OHC anomaly', 'OHC$_{\mathrm{non-mirrored}}$', ...
     'location', 'southeast', 'orientation', 'vertical');
 set(h55, 'interpreter', 'latex', 'fontsize', 18, 'textcolor', RdYlBu(60,:));
 
+% custom labels
 hXLabel = xlabel('Month', 'interpreter', 'latex', 'color', [1 1 1]);
 set(gca, 'Xtick', [1, 6, 12, 18, 24, 30, 36, 42, 48]);
 
-
-
 subplot(2,2,3)
-yyaxis left    
+yyaxis left   
+% --- time series, idealized N34 index and the one used for deriving the
+% atmospheric input for the simulation
 h2 = plot(linspace(1,48,48), mom_nino_pnEXP1, 'color', [RdYlBu(50,:)], 'linewidth', 2.5); hold on;
 h22 = plot(linspace(1,24, 2920), pnnino_comp_highres(1,:), 'color', RdYlBu(50,:), 'linewidth', 2.5, 'linestyle', '--'); hold on;
 h23 = plot(linspace(25,48, 2920), pnnino_comp_highres_spin(1,:), 'color', RdYlBu(50,:), 'linewidth', 2.5, 'linestyle', '--'); hold on;
 ylim([-2.5 2.5]);
     hYLabel = ylabel(['[$^{\circ}$C]'],'interpreter','latex');
 
-        % draw arrows to denote El Nino and La Nina events
-    arrow([1.1, 2.6], [4, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', [1 1 1]);
-    arrow([21, 2.6], [23.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', [1 1 1]);
-    text([5 5],[2.6 2.6],'El Ni\~no event', 'interpreter', 'latex', 'fontsize', 21, 'color', [1 1 1]);
-    
-    arrow([24.1, 2.6], [29, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', [1 1 1]);
-    arrow([43, 2.6], [47.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', [1 1 1]);
-    text([30 30],[2.6 2.6],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', [1 1 1]);
+% draw arrows to denote El Nino and La Nina events
+arrow([1.1, 2.6], [4, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', [1 1 1]);
+arrow([21, 2.6], [23.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', [1 1 1]);
+text([5 5],[2.6 2.6],'El Ni\~no event', 'interpreter', 'latex', 'fontsize', 21, 'color', [1 1 1]);
 
-    set(gca, ...
-      'Box'             , 'off'         , ...
-      'TickDir'         , 'out'         , ...
-      'TickLength'      , [.01 .01]     , ...
-      'XMinorTick'      , 'off'         , ...
-      'YMinorTick'      , 'off'         , ...
-      'YGrid'           , 'on'          , ...
-      'YTick'           , -2:1:2   , ...     % define grid, every 1000 m a grid line
-      'XColor'          , RdYlBu(60,:)  , ...
-      'YColor'          , RdYlBu(60,:)  , ...
-      'ticklabelinterpreter', 'latex'   , ...
-      'LineWidth'       , 1.25);
-      % 'GridLineStyle'   , '--'          , ...
-    set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(50,:));
+arrow([24.1, 2.6], [29, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', [1 1 1]);
+arrow([43, 2.6], [47.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', [1 1 1]);
+text([30 30],[2.6 2.6],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', [1 1 1]);
+
+set(gca, ...
+    'Box'             , 'off'         , ...
+    'TickDir'         , 'out'         , ...
+    'TickLength'      , [.01 .01]     , ...
+    'XMinorTick'      , 'off'         , ...
+    'YMinorTick'      , 'off'         , ...
+    'YGrid'           , 'on'          , ...
+    'YTick'           , -2:1:2   , ...     % define grid, every 1000 m a grid line
+    'XColor'          , RdYlBu(60,:)  , ...
+    'YColor'          , RdYlBu(60,:)  , ...
+    'ticklabelinterpreter', 'latex'   , ...
+    'LineWidth'       , 1.25);
+
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(50,:));
 
 yyaxis right
+% --- plot time series: anomalous warm water volume anomlies
 h4 = plot(linspace(1,48,48), wwv_pnEXP1, 'color', [RdYlBu(10,:)], 'linewidth', 2.5); hold on;
 ylim([-2.5e14 2.5e14]);
-hYLabel = ylabel(['[m$^{3}$]'],'interpreter','latex');
+hYLabel = ylabel(['[m$^{3}$]'],'interpreter','latex'); % add unit
 
-    vline = line([24 24], [-3e14 3e14]); % draw boundary line between El Niño and La Niña simulation
-    set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
-    vline = line([48 48], [-3e14 3e14]); % draw boundary line between El Niño and La Niña simulation
-    set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
+vline = line([24 24], [-3e14 3e14]); % draw boundary line 
+set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
+vline = line([48 48], [-3e14 3e14]); % draw boundary line 
+set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
     
-     set(gca, ...
-       'XColor'          , RdYlBu(60,:)  , ...
-       'YColor'          , RdYlBu(60,:));
-    set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 21);
-    set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(10,:));
-
-% 	text([49 49],[-.5e14 -.5e14],'c) Ni\~no3.4 anomaly', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(50,:));
-% 	text([49 49],[-1.5e14 -1.5e14],'d) WWV anomaly', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(10,:));
+% set custom colours
+set(gca, ...
+    'XColor'          , RdYlBu(60,:)  , ...
+    'YColor'          , RdYlBu(60,:));
+set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 21);
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(10,:));
 
 h66 = legend([h22 h2 h4], 'N34$_{\mathrm{ideal.}}$','N34 anomaly', ...
     'WWV anomaly', 'WWV$_{\mathrm{non-mirrored}}$', ...
@@ -567,7 +420,7 @@ set(gca, 'Xtick', [1, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72]);
  a = interp1(1:48, mom_nino_pnEXP1, linspace(1, 48, 5840), 'linear'); 
  b(1:2920) = pnnino_comp_highres(1,:); b(2921:5840) = pnnino_comp_highres_spin(1,:);
  corrcoef(a, b)
- 
+ % add text labels
  text(-7, 3.25e14, 'c) El Ni\~no event', 'interpreter', 'latex', 'Fontsize', 30, ...
      'color', [0 0 0]);
  text(16, 1.75e14, '$r = 0.97$', 'interpreter', 'latex', 'Fontsize', 21, ...
@@ -575,66 +428,61 @@ set(gca, 'Xtick', [1, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72]);
 
 
     xlim([1 48]);
-% pbaspect([6 1 1]);                        % aspect ratios: x, y, z
 
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 % plot for La Nina event (subplots b and d)
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+% (this is just copy-paste from the two subplots above with different data)
 
 % sst anomaly
 subplot(2,2,2)
 yyaxis left    
 h5 = plot(linspace(1,48,48), sst_pnEXP2, 'color', RdYlBu(60,:), 'linewidth', 2.5); hold on;
 ylim([-0.15 0.15]);
-    hYLabel = ylabel(['[$^{\circ}$C]'],'interpreter','latex');
-    set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(60,:));
+hYLabel = ylabel(['[$^{\circ}$C]'],'interpreter','latex');
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(60,:));
 
-    % draw arrows to denote El Nino and La Nina events
-    arrow([1.1, 0.165], [4, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', RdYlBu(60,:));
-    arrow([21, 0.165], [23.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', RdYlBu(60,:));
-    text([4 4],[0.165 0.165],'La Ni\~na event', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
-    
-    arrow([24.1, 0.165], [29, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', 'k');
-    arrow([43, 0.165], [47.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', 'k');
-    text([30 30],[0.165 0.165],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', 'k');
+% draw arrows to denote El Nino and La Nina events
+arrow([1.1, 0.165], [4, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', RdYlBu(60,:));
+arrow([21, 0.165], [23.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', RdYlBu(60,:));
+text([4 4],[0.165 0.165],'La Ni\~na event', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
 
-%     arrow([24.1, 0.09], [27, 0.09], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', RdYlBu(60,:));
-%     arrow([45, 0.09], [47.9, 0.09], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', RdYlBu(60,:));
-%     text([28 28],[0.09 0.09],'La Ni\~na event', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
-    set(gca, ...
-      'Box'             , 'off'         , ...
-      'TickDir'         , 'out'         , ...
-      'TickLength'      , [.01 .01]     , ...
-      'XMinorTick'      , 'off'         , ...
-      'YMinorTick'      , 'off'         , ...
-      'YGrid'           , 'on'          , ...
-      'YTick'           , -0.15:0.05:0.15   , ...     % define grid, every 1000 m a grid line
-      'XColor'          , RdYlBu(60,:)  , ...
-      'YColor'          , RdYlBu(60,:)  , ...
-      'ticklabelinterpreter', 'latex'   , ...
-      'LineWidth'       , 1.25);
-      % 'GridLineStyle'   , '--'          , ...
+arrow([24.1, 0.165], [29, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', 'k');
+arrow([43, 0.165], [47.9, 0.165], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', 'k');
+text([30 30],[0.165 0.165],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', 'k');
+
+set(gca, ...
+    'Box'             , 'off'         , ...
+    'TickDir'         , 'out'         , ...
+    'TickLength'      , [.01 .01]     , ...
+    'XMinorTick'      , 'off'         , ...
+    'YMinorTick'      , 'off'         , ...
+    'YGrid'           , 'on'          , ...
+    'YTick'           , -0.15:0.05:0.15   , ...     % define grid, every 1000 m a grid line
+    'XColor'          , RdYlBu(60,:)  , ...
+    'YColor'          , RdYlBu(60,:)  , ...
+    'ticklabelinterpreter', 'latex'   , ...
+    'LineWidth'       , 1.25);
 
 yyaxis right
 h3 = plot(linspace(1,48,48), cumtrapz(net_sfc_global_pnEXP2)* ...
     60*60*24*365.25*4*squeeze(nansum(squeeze(nansum(areacello, 1)), 2)), 'color', RdYlBu(20,:), 'linewidth', 2.5); hold on;
 set(gca, 'xtick',[]);
 ylim([-3e23 3e23]);
-    hYLabel = ylabel(['[J]'],'interpreter','latex');
+hYLabel = ylabel(['[J]'],'interpreter','latex');
 
-    vline = line([24 24], [-5e23 5e23]); % draw boundary line between El Niño and La Niña simulation
-    set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
-    vline = line([48 48], [-5e23 5e23]); % draw boundary line between El Niño and La Niña simulation
-    set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
-    
-    xlim([1 48]);
-%     
-     set(gca, ...
-       'XColor'          , RdYlBu(60,:)  , ...
-       'YColor'          , RdYlBu(60,:));
-    set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 21);
-    set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(20,:));
+vline = line([24 24], [-5e23 5e23]); % draw boundary line between El Niño and La Niña simulation
+set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
+vline = line([48 48], [-5e23 5e23]); % draw boundary line between El Niño and La Niña simulation
+set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
+
+xlim([1 48]);
+set(gca, ...
+    'XColor'          , RdYlBu(60,:)  , ...
+    'YColor'          , RdYlBu(60,:));
+set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 21);
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(20,:));
 
 hXLabel = xlabel('Month', 'interpreter', 'latex', 'color', [1 1 1]);
 set(gca, 'Xtick', [1, 6, 12, 18, 24, 30, 36, 42, 48]);
@@ -652,49 +500,43 @@ ylim([-2.5 2.5]);
     hYLabel = ylabel(['[$^{\circ}$C]'],'interpreter','latex');
 
 % draw arrows with white colour to keep aspect ratio of subplots the same
-% with white colour they are there but invisible
-    arrow([1.1, 2.6], [4, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', [1 1 1]);
-    arrow([21, 2.6], [23.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', [1 1 1]);
-    text([4 4],[2.6 2.6],'El Ni\~no event', 'interpreter', 'latex', 'fontsize', 21, 'color', [1 1 1]);
-    
-    arrow([24.1, 2.6], [29, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', [1 1 1]);
-    arrow([43, 2.6], [47.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', [1 1 1]);
-    text([30 30],[2.6 2.6],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', [1 1 1]);
+arrow([1.1, 2.6], [4, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [2], 'color', [1 1 1]);
+arrow([21, 2.6], [23.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', .6, 'ends', [1], 'color', [1 1 1]);
+text([4 4],[2.6 2.6],'El Ni\~no event', 'interpreter', 'latex', 'fontsize', 21, 'color', [1 1 1]);
 
-    set(gca, ...
-      'Box'             , 'off'         , ...
-      'TickDir'         , 'out'         , ...
-      'TickLength'      , [.01 .01]     , ...
-      'XMinorTick'      , 'off'         , ...
-      'YMinorTick'      , 'off'         , ...
-      'YGrid'           , 'on'          , ...
-      'YTick'           , -2:1:2   , ...     % define grid, every 1000 m a grid line
-      'XColor'          , RdYlBu(60,:)  , ...
-      'YColor'          , RdYlBu(60,:)  , ...
-      'ticklabelinterpreter', 'latex'   , ...
-      'LineWidth'       , 1.25);
-      % 'GridLineStyle'   , '--'          , ...
-    set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(50,:));
+arrow([24.1, 2.6], [29, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [2], 'color', [1 1 1]);
+arrow([43, 2.6], [47.9, 2.6], 'BaseAngle', 70, 'length', 5, 'width', 1, 'ends', [1], 'color', [1 1 1]);
+text([30 30],[2.6 2.6],'spin-down', 'interpreter', 'latex', 'fontsize', 22, 'color', [1 1 1]);
+
+set(gca, ...
+    'Box'             , 'off'         , ...
+    'TickDir'         , 'out'         , ...
+    'TickLength'      , [.01 .01]     , ...
+    'XMinorTick'      , 'off'         , ...
+    'YMinorTick'      , 'off'         , ...
+    'YGrid'           , 'on'          , ...
+    'YTick'           , -2:1:2   , ...     % define grid, every 1000 m a grid line
+    'XColor'          , RdYlBu(60,:)  , ...
+    'YColor'          , RdYlBu(60,:)  , ...
+    'ticklabelinterpreter', 'latex'   , ...
+    'LineWidth'       , 1.25);
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(50,:));
 
 yyaxis right
 h4 = plot(linspace(1,48,48), wwv_pnEXP2, 'color', [RdYlBu(10,:)], 'linewidth', 2.5); hold on;
 ylim([-2.5e14 2.5e14]);
 hYLabel = ylabel(['[m$^{3}$]'],'interpreter','latex');
 
-    vline = line([24 24], [-3e14 3e14]); % draw boundary line between El Niño and La Niña simulation
-    set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
-    vline = line([48 48], [-3e14 3e14]); % draw boundary line between El Niño and La Niña simulation
-    set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
-    
-     set(gca, ...
-       'XColor'          , RdYlBu(60,:)  , ...
-       'YColor'          , RdYlBu(60,:));
-    set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 21);
-    set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(10,:));
+vline = line([24 24], [-3e14 3e14]); % draw boundary line between El Niño and La Niña simulation
+set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
+vline = line([48 48], [-3e14 3e14]); % draw boundary line between El Niño and La Niña simulation
+set(vline, 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
 
-% 	text([49 49],[-.5e14 -.5e14],'c) Ni\~no3.4 anomaly', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(50,:));
-% 	text([49 49],[-1.5e14 -1.5e14],'d) WWV anomaly', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(10,:));
-
+set(gca, ...
+    'XColor'          , RdYlBu(60,:)  , ...
+    'YColor'          , RdYlBu(60,:));
+set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 21);
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 21, 'color', RdYlBu(10,:));
 
 % properties for full plot
 hXLabel = xlabel('Month', 'interpreter', 'latex');
@@ -704,47 +546,14 @@ text(-7, 3.25e14, 'd) La Ni\~na event', 'interpreter', 'latex', 'Fontsize', 30, 
      'color', [0 0 0]);
 
 
-    xlim([1 48]);
-% pbaspect([6 1 1]);                        % aspect ratios: x, y, z
+xlim([1 48]);
 
 
 
-% % finished fancy plot
+% % save plot
 % % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
     set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
     directory = 'C:/Users/Maurice Huguenin/Desktop/';
     print('-dpng','-r300', [directory f1]);
-
-
-% finished fancy plot
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
-%     set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
-%     directory = 'C:/Users/Maurice Huguenin/Desktop/';
-%     savefig([directory f1 '.png']) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
