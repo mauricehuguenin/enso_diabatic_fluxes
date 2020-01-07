@@ -23,7 +23,9 @@ I use the following packages which are publicly available online:
 
 # List of Figures and their Analysis Scripts
 
-__Fig. 1__: Import saved data from the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace and visualize in Fig1_wind_stress_regression_enso.m
+EOF_based_regression_analysis_of_wind_stress_anomalies.m describes the regression analysis of wind stress anomalies in the equatorial Pacific as in McGregor et al., 2014.
+
+__Fig. 1__: Visualize data from the regression analysis stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
 
 __Fig. 2__: Import data from workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in Fig2_idealized_symmetric_timeseries.m
 
