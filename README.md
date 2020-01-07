@@ -23,7 +23,7 @@ I use the following packages which are publicly available online:
 
 # List of Figures and their Analysis Scripts
 
-__Regression Analysis__: EOF_based_regression_analysis_of_wind_stress_anomalies.m describes the regression analysis of wind stress anomalies in the equatorial Pacific as in McGregor et al., 2014.
+__Regression Analysis__: EOF_based_regression_analysis_of_wind_stress_anomalies.m describes the regression analysis of wind stress anomalies in the equatorial Pacific as in [McGregor et al., 2014](https://doi.org/10.1002/2014JC010286).
 
 __Fig. 1__: Visualize data from the regression analysis stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
 
@@ -66,3 +66,10 @@ __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_s
 - __WMT_time_series_1979-2016.mat__ contains the time series of Fig. 12 as well as the table for the contributions of all terms over the discharge and recharge periods
 - __workspace_regression_patterns_PC1_equal_nino34_rev2.mat__ contains the spatial patterns and time series for Fig. 1
 - __workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat__ contains the saved variables for Fig. 3
+
+# Model output data
+
+- __idealized El Niño__: G:/Maurice_ENSO_Data/pn_EXP1_composite_nino_windstress/ on cube
+- __idealized La Niña__: G:/Maurice_ENSO_Data/pn_EXP2_composite_nina_windstress/ on cube
+- __1979-2016 simulation__: /g/data/e14/mv7494/access-om2/archive/025deg_jra55_iaf/ on gadi
+
