@@ -71,18 +71,19 @@ __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_s
 
 
 # Data folder
-```
-data
-?   ??? equatorial_transect_workspace          # data for 
-?   ?   ??? ACCESS-OM2_output*_varsat_Eq.mat
-?   ?   ??? equatorial_slices_pnEXP1 # data for the ideal. El Nino
-?   ?   ??? equatorial_slices_pnEXP2 # data for the ideal. La Nina
-Figs. 6, 8 and 13
-?   ??? WMT_time_series_1979-2016.mat # data for time series of Fig. 12 and tabular data for Fig. 15
-?   ??? plotting_all_PC1_and_PC2_patterns_rev1.mat # data for all spatial regression patterns (Figs. 1 and 3)
-?   ??? workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat # variables for Fig. 3
-?   ??? workspace_regression_patterns_PC1_equal_nino34_rev2.mat # data for spatial patterns and time series for Fig. 1
-```
+- __plotting_all_PC1_and_PC2_patterns_rev1.mat__ contains data for all spatial regression patterns
+- __workspace_regression_patterns_PC1_equal_nino34_rev2.mat__ contains the spatial patterns and time series for Fig. 1
+- __workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat__ contains the saved variables for Fig. 3
+
+
+
+
+
+
+
+
+
+
 
 # Model output data
 
