@@ -43,7 +43,7 @@ __Fig. 3__: Visualize regression patterns from the plotting_all_PC1_and_PC2_patt
 
 __Fig. 4__: Using Fig4_timeseries_nino34_and_wwv_and_taux_and_nsfc.m to plot climate indices
 
-__Fig. 5__: Fig5_timeseries_wwv_transport_clim.m used for plotting the climatological WWV budget
+__Fig. 5__: Fig5_timeseries_wwv_transport_clim.m used for plotting the climatological warm water volume (WWV) budget
 
 ----
 
@@ -59,9 +59,9 @@ __Fig. 10__: Plotting equatorial isotherm distribution with Fig10_20_degrees_iso
 
 ----
 
-__Fig. 11__: 
+__Fig. 11__: Using Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m to plot time series of observed and simulated N34 values and WWV anomalies.
 
-__Fig. 12__: 
+__Fig. 12__: Calculation of the WWV budget over the 1979-2016 period with Fig12_time_series_wwv_transport.m
 
 __Fig. 13__: 
 
