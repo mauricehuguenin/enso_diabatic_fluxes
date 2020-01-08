@@ -55,7 +55,7 @@ __Fig. 8__: As for Fig. 6 but using the model output of the idealized El Niño an
 
 __Fig. 9__: Fig9_discharge_and_recharge_schematics.pptx shows the schematics with data extracted from ..... drawn in powerpoint
 
-__Fig. 10__: 
+__Fig. 10__: Plotting equatorial isotherm distribution with Fig10_20_degrees_isotherm_depth.m
 
 ----
 
