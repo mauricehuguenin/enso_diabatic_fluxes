@@ -72,7 +72,8 @@ __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_s
 
 # Data folder
 - __equatorial_transect_workspace__:
-	+ test
+	+ data from the 1979-2016 ACCESS-OM2 simulation
+	+ equatorial_slices_pnEXP1 # data for the ideal. El Niño
 
 - __WMT_time_series_1979-2016.mat__: the WWV budget terms as time series for the 1979-2016 period
 - __plotting_all_PC1_and_PC2_patterns_rev1.mat__: data for all spatial regression patterns
