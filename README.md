@@ -96,7 +96,7 @@ __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_s
 
 -> make sure to store data in correct folder before submitting
 
-- __idealized El Niño__: G:/Maurice_ENSO_Data/pn_EXP1_composite_nino_windstress/ on cube
-- __idealized La Niña__: G:/Maurice_ENSO_Data/pn_EXP2_composite_nina_windstress/ on cube
-- __1979-2016 simulation__: /g/data/e14/mv7494/access-om2/archive/025deg_jra55_iaf/ on gadi
+- __idealized El Niño__: G:/Maurice_ENSO_Data/pn_EXP1_composite_nino_windstress/ on my personal hard drive
+- __idealized La Niña__: G:/Maurice_ENSO_Data/pn_EXP2_composite_nina_windstress/ on my personal hard drive
+- __1979-2016 simulation__: mv7494@gadi.nci.org.au:/g/data/e14/mv7494/access-om2/archive/025deg_jra55_iaf/ 
 
