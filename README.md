@@ -25,16 +25,15 @@ I use the following packages which are publicly available online:
 
 # List of Figures and Analysis Scripts
 
-__EOF_based_regression_analysis_of_wind_stress_anomalies.m__: describes the regression analysis of wind stress anomalies in the equatorial Pacific as in [McGregor et al., 2014](https://doi.org/10.1002/2014JC010286).
+[EOF_based_regression_analysis_of_wind_stress_anomalies.m](EOF_based_regression_analysis_of_wind_stress_anomalies.m): describes the regression analysis of wind stress anomalies in the equatorial Pacific as in [McGregor et al., 2014](https://doi.org/10.1002/2014JC010286).
 
-__nanmonmean.m__: function to create the monthly mean of equatorial transect data
+[nanmonmean.m](nanmonmean.m): function to create the monthly mean of equatorial transect data
 
-__testmap.m__: function to quickly create spatial maps of data with testmap(lon, lat, data) where all input has dimensions [1440 1080]. I use this function often in the analysis scripts for quick checks
+[testmap.m](testmap.m): function to quickly create spatial maps of data with testmap(lon, lat, data) where all input has dimensions [1440 1080]. I use this function often in the analysis scripts for quick checks
 
-__boom.m__: function that closes all active figures
+[boom.m](boom.m): function that closes all active figures
 
 ----
-[this subtext](subpro/subtext.md)
 
 __Fig. 1__: Visualize data from the regression analysis ([EOF_based_regression_analysis_of_wind_stress_anomalies.m](EOF_based_regression_analysis_of_wind_stress_anomalies.m)) stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
 
