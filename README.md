@@ -47,7 +47,7 @@ __Fig. 5__: Fig5_timeseries_wwv_transport_clim.m used for plotting the climatolo
 
 ----
 
-__Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with Fig6_and_Fig8_climatological_transects_of_water_mass_transformation_velocities.m. The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The file nanmonmean.m is used to calculate monthly mean values for the transects.
+__Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with Fig6_and_Fig8_equatorial_transects_of_water_mass_transformation_velocities.m. The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The .mat workspaces are located in data/equatorial_transect_workspace/.. The file nanmonmean.m is used to calculate monthly mean values for the transects.
 
 __Fig. 7__: Calculating and plotting the WWV budget for the idealized El Niño and La Niña events with Fig7_time_series_wwv_transport_short.m
 
@@ -63,7 +63,7 @@ __Fig. 11__: Using Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m to plot ti
 
 __Fig. 12__: Calculation of the WWV budget over the 1979-2016 period with Fig12_time_series_wwv_transport.m
 
-__Fig. 13__: 
+__Fig. 13__: Creating equatorial transects as in Fig. 6 and Fig. 8 with Fig13_equatorial_transects_during_LN1988.m The first part of the script saves the equatorial data in data/ACCESS-OM2_output*varsat_Eq.mat which are then loaded in and plotted
 
 __Fig. 14__: Create lag regression with Fig14_lag_regression_of_wwv_terms_and_N34.m while loading in the saved time series from the data/WMT_time_series_1979-2016.mat workspace
 
