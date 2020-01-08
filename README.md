@@ -39,11 +39,11 @@ __Fig. 5__: Fig5_timeseries_wwv_transport_clim.m used for plotting the climatolo
 
 ----
 
-__Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with Fig6_climatological_transects_of_water_mass_transformation_velocities.m. The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The file nanmonmean.m is used to calculate monthly mean values for the transects.
+__Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with Fig6_and_Fig8_climatological_transects_of_water_mass_transformation_velocities.m. The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The file nanmonmean.m is used to calculate monthly mean values for the transects.
 
 __Fig. 7__: 
 
-__Fig. 8__: 
+__Fig. 8__: As for Fig. 6 but using the model output of the idealized El Niño and La Niña simulations
 
 __Fig. 9__: Fig9_discharge_and_recharge_schematics.pptx shows the schematics with data extracted from ..... drawn in powerpoint
 
