@@ -31,7 +31,7 @@ __Fig. 1__: Visualize data from the regression analysis stored in the data/works
 
 __Fig. 2__: Import data from workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in Fig2_idealized_symmetric_timeseries.m
 
-__Fig. 3__: Visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace with __INSERT_SCRIPT_NAME_HERE__.m
+__Fig. 3__: Visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace as in Fig. 1.
 
 __Fig. 4__: Using Fig4_timeseries_nino34_and_wwv_and_taux_and_nsfc.m to plot climate indices
 
