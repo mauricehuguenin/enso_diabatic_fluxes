@@ -1,5 +1,5 @@
 # enso_diabatic_fluxes
-Scripts used for my Msc thesis/PhD project: __Diabatic Contributions to Warm Water Volume Variability over ENSO Events__
+Scripts used for the project: __Diabatic Contributions to Warm Water Volume Variability over ENSO Events__ 
 
 Maurice F. Huguenin(1,2), Ryan M. Holmes (2,3) and Matthew H. England (2)
 
