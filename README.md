@@ -71,9 +71,11 @@ __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_s
 
 
 # Data folder
-- __plotting_all_PC1_and_PC2_patterns_rev1.mat__ contains data for all spatial regression patterns
-- __workspace_regression_patterns_PC1_equal_nino34_rev2.mat__ contains the spatial patterns and time series for Fig. 1
-- __workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat__ contains the saved variables for Fig. 3
+- __equatorial_transect_workspace__: equatorial transect data for the idealized El Nino, La Nina as well as the La Nina event in 1988
+- __WMT_time_series_1979-2016.mat__: the WWV budget terms as time series for the 1979-2016 period
+- __plotting_all_PC1_and_PC2_patterns_rev1.mat__: data for all spatial regression patterns
+- __workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat__: saved variables for Fig. 3
+- __workspace_regression_patterns_PC1_equal_nino34_rev2.mat__: data for the spatial patterns and time series for Fig. 1
 
 
 
