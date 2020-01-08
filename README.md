@@ -23,7 +23,7 @@ I use the following packages which are publicly available online:
 
 - the [TEOS-10](http://www.teos-10.org/publications.htm) package which contains oceanographic functions for Matlab, e.g. the conversion from potential to conservative temperature. Calculations using conservative temperature are virtually identical to those using potential temperature. IOC,  SCOR  and  IAPSO,  2010: The  international  thermodynamic  equation  of  seawater –  2010:  Calculation  and use of thermodynamic properties.  Intergovernmental Oceanographic Commission, Manuals and Guides No. 56, UNESCO (English), 196 pp.
 
-# List of Figures and their Analysis Scripts
+# List of Figures and Analysis Scripts
 
 __EOF_based_regression_analysis_of_wind_stress_anomalies.m__: describes the regression analysis of wind stress anomalies in the equatorial Pacific as in [McGregor et al., 2014](https://doi.org/10.1002/2014JC010286).
 
@@ -34,8 +34,9 @@ __testmap.m__: function to quickly create spatial maps of data with testmap(lon,
 __boom.m__: function that closes all active figures
 
 ----
+[this subtext](subpro/subtext.md)
 
-__Fig. 1__: Visualize data from the regression analysis (EOF_based_regression_analysis_of_wind_stress_anomalies.m) stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
+__Fig. 1__: Visualize data from the regression analysis ([EOF_based_regression_analysis_of_wind_stress_anomalies.m](EOF_based_regression_analysis_of_wind_stress_anomalies.m)) stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
 
 __Fig. 2__: Import data from workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in Fig2_idealized_symmetric_timeseries.m
 
