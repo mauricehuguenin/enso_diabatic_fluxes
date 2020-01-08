@@ -25,13 +25,13 @@ I use the following packages which are publicly available online:
 
 # List of Figures and their Analysis Scripts
 
-__Regression Analysis__: EOF_based_regression_analysis_of_wind_stress_anomalies.m describes the regression analysis of wind stress anomalies in the equatorial Pacific as in [McGregor et al., 2014](https://doi.org/10.1002/2014JC010286).
+__EOF_based_regression_analysis_of_wind_stress_anomalies.m__: describes the regression analysis of wind stress anomalies in the equatorial Pacific as in [McGregor et al., 2014](https://doi.org/10.1002/2014JC010286).
 
-nanmonmean.m -> function to create the monthly mean of equatorial transect data
+__nanmonmean.m__: function to create the monthly mean of equatorial transect data
 
-testmap.m -> function to quickly create spatial maps of data with testmap(lon, lat, data) where all input has dimensions [1440 1080]. I use this function often in the analysis scripts for quick checks
+__testmap.m__: function to quickly create spatial maps of data with testmap(lon, lat, data) where all input has dimensions [1440 1080]. I use this function often in the analysis scripts for quick checks
 
-boom.m -> function that closes all active figures
+__boom.m__: function that closes all active figures
 
 ----
 
