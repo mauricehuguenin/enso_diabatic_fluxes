@@ -27,6 +27,14 @@ I use the following packages which are publicly available online:
 
 __Regression Analysis__: EOF_based_regression_analysis_of_wind_stress_anomalies.m describes the regression analysis of wind stress anomalies in the equatorial Pacific as in [McGregor et al., 2014](https://doi.org/10.1002/2014JC010286).
 
+nanmonmean.m -> function to create the monthly mean of equatorial transect data
+
+testmap.m -> function to quickly create spatial maps of data with testmap(lon, lat, data) where all input has dimensions [1440 1080]. I use this function often in the analysis scripts for quick checks
+
+boom.m -> function that closes all active figures
+
+----
+
 __Fig. 1__: Visualize data from the regression analysis stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
 
 __Fig. 2__: Import data from workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in Fig2_idealized_symmetric_timeseries.m
@@ -41,7 +49,7 @@ __Fig. 5__: Fig5_timeseries_wwv_transport_clim.m used for plotting the climatolo
 
 __Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with Fig6_and_Fig8_climatological_transects_of_water_mass_transformation_velocities.m. The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The file nanmonmean.m is used to calculate monthly mean values for the transects.
 
-__Fig. 7__: 
+__Fig. 7__: Calculating and plotting the WWV budget for the idealized El Niño and La Niña events with Fig7_time_series_wwv_transport_short.m
 
 __Fig. 8__: As for Fig. 6 but using the model output of the idealized El Niño and La Niña simulations
 
