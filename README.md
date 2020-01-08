@@ -71,7 +71,7 @@ __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_s
 
 
 # Data folder
-```bash
+```
 data
 ?   ??? equatorial_transect_workspace          # data for 
 ?   ?   ??? ACCESS-OM2_output*_varsat_Eq.mat
