@@ -39,7 +39,7 @@ __Fig. 5__: Fig5_timeseries_wwv_transport_clim.m used for plotting the climatolo
 
 ----
 
-__Fig. 6__: 
+__Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with Fig6_climatological_transects_of_water_mass_transformation_velocities.m. The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The file nanmonmean.m is used to calculate monthly mean values for the transects.
 
 __Fig. 7__: 
 
