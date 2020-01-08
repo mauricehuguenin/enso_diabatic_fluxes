@@ -38,38 +38,37 @@ __boom.m__: function that closes all active figures
 
 __Fig. 1__: Visualize data from the regression analysis ([EOF_based_regression_analysis_of_wind_stress_anomalies.m](EOF_based_regression_analysis_of_wind_stress_anomalies.m)) stored in the data/workspace_regression_patterns_PC1_equals_N34_rev2.mat workspace with Fig1_wind_stress_regression_enso.m
 
-__Fig. 2__: Import data from data/workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in (Fig2_idealized_symmetric_timeseries.m)[Fig2_idealized_symmetric_timeseries.m]
+__Fig. 2__: Import data from data/workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in [Fig2_idealized_symmetric_timeseries.m](Fig2_idealized_symmetric_timeseries.m)
 
 __Fig. 3__: Visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace as in Fig. 1. 
 
-__Fig. 4__: Using (Fig4_timeseries_nino34_and_wwv_and_taux_and_nsfc.m)[Fig4_timeseries_nino34_and_wwv_and_taux_and_nsfc.m] to plot climate indices
+__Fig. 4__: Using [Fig4_timeseries_nino34_and_wwv_and_taux_and_nsfc.m](Fig4_timeseries_nino34_and_wwv_and_taux_and_nsfc.m) to plot climate indices
 
-__Fig. 5__: (Fig5_timeseries_wwv_transport_clim.m)[Fig5_timeseries_wwv_transport_clim.m] used for plotting the climatological warm water volume (WWV) budget
+__Fig. 5__: [Fig5_timeseries_wwv_transport_clim.m](Fig5_timeseries_wwv_transport_clim.m) used for plotting the climatological warm water volume (WWV) budget
 
 ----
 
-__Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with (Fig6_and_Fig8_equatorial_transects_of_water_mass_transformation_velocities.m)[Fig6_and_Fig8_equatorial_transects_of_water_mass_transformation_velocities.m]. The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The .mat workspaces are located in data/equatorial_transect_workspace/.. The file nanmonmean.m is used to calculate monthly mean values for the transects.
+__Fig. 6__: Creating equatorial transects of vertical mixing/surface forcing with [Fig6_and_Fig8_equatorial_transects_of_water_mass_transformation_velocities.m](Fig6_and_Fig8_equatorial_transects_of_water_mass_transformation_velocities.m). The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The .mat workspaces are located in data/equatorial_transect_workspace/.. The file nanmonmean.m is used to calculate monthly mean values for the transects.
 
-__Fig. 7__: Calculating and plotting the WWV budget for the idealized El Niño and La Niña events with (Fig7_time_series_wwv_transport_short.m)[Fig7_time_series_wwv_transport_short.m]
+__Fig. 7__: Calculating and plotting the WWV budget for the idealized El Niño and La Niña events with [Fig7_time_series_wwv_transport_short.m](Fig7_time_series_wwv_transport_short.m)
 
 __Fig. 8__: As for Fig. 6 but using the model output of the idealized El Niño and La Niña simulations
 
-__Fig. 9__: (Fig9_discharge_and_recharge_schematics.pptx)[Fig9_discharge_and_recharge_schematics.pptx] shows the schematics with data extracted from ..... drawn in powerpoint
+__Fig. 9__: [Fig9_discharge_and_recharge_schematics.pptx](Fig9_discharge_and_recharge_schematics.pptx) shows the schematics with data extracted from ..... drawn in powerpoint
 
-__Fig. 10__: Plotting equatorial isotherm distribution with (Fig10_20_degrees_isotherm_depth.m)[Fig10_20_degrees_isotherm_depth.m
-]
+__Fig. 10__: Plotting equatorial isotherm distribution with [Fig10_20_degrees_isotherm_depth.m](Fig10_20_degrees_isotherm_depth.m)
 
 ----
 
-__Fig. 11__: Using (Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m)[Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m] to plot time series of observed and simulated N34 values and WWV anomalies.
+__Fig. 11__: Using [Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m](Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m) to plot time series of observed and simulated N34 values and WWV anomalies.
 
-__Fig. 12__: Calculation of the WWV budget over the 1979-2016 period with (Fig12_time_series_wwv_transport.m)[Fig12_time_series_wwv_transport.m]
+__Fig. 12__: Calculation of the WWV budget over the 1979-2016 period with [Fig12_time_series_wwv_transport.m](Fig12_time_series_wwv_transport.m)
 
-__Fig. 13__: Creating equatorial transects as in Fig. 6 and Fig. 8 with (Fig13_equatorial_transects_during_LN1988.m)[Fig13_equatorial_transects_during_LN1988.m] The first part of the script saves the equatorial data in data/ACCESS-OM2_output*varsat_Eq.mat which are then loaded in and plotted
+__Fig. 13__: Creating equatorial transects as in Fig. 6 and Fig. 8 with [Fig13_equatorial_transects_during_LN1988.m](Fig13_equatorial_transects_during_LN1988.m) The first part of the script saves the equatorial data in data/ACCESS-OM2_output*varsat_Eq.mat which are then loaded in and plotted
 
-__Fig. 14__: Create lag regression with (Fig14_lag_regression_of_wwv_terms_and_N34.m)[Fig14_lag_regression_of_wwv_terms_and_N34.m] while loading in the saved time series from the data/WMT_time_series_1979-2016.mat workspace
+__Fig. 14__: Create lag regression with [Fig14_lag_regression_of_wwv_terms_and_N34.m](Fig14_lag_regression_of_wwv_terms_and_N34.m) while loading in the saved time series from the data/WMT_time_series_1979-2016.mat workspace
 
-__Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python ((Fig15_visualizing_script_barplot.py)[Fig15_visualizing_script_barplot.py]) and then add the individual bar plots together in (Fig15_barplot_wwv_contributing_terms.pptx)[Fig15_barplot_wwv_contributing_terms.pptx]. Fig15_visualizing_script_barplot.py acts as an example, the scripts for the five other events are, except for the hard-coded data, identical. I choose this approach with a separate script for each event as it was the fastest that worked the first time.
+__Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python (([Fig15_visualizing_script_barplot.py]Fig15_visualizing_script_barplot.py)) and then add the individual bar plots together in [Fig15_barplot_wwv_contributing_terms.pptx](Fig15_barplot_wwv_contributing_terms.pptx). Fig15_visualizing_script_barplot.py acts as an example, the scripts for the five other events are, except for the hard-coded data, identical. I choose this approach with a separate script for each event as it was the fastest that worked the first time.
 
 
 # Data folder
