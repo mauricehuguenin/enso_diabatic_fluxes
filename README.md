@@ -55,11 +55,11 @@ __Fig. 8__: As for Fig. 6 but using the model output of the idealized El Niño an
 
 __Fig. 9__: [Fig9_discharge_and_recharge_schematics.pptx](Fig9_discharge_and_recharge_schematics.pptx) shows the schematics with data extracted from ..... drawn in powerpoint
 
-__Fig. 10__: Plotting equatorial isotherm distribution with [Fig10_20_degrees_isotherm_depth.m](Fig10_20_degrees_isotherm_depth.m)
+__Fig. 10__: Using [Fig11_time_series_nino34_and_wwv.m](Fig11_time_series_nino34_and_wwv.m) to plot time series of observed and simulated N34 values and WWV anomalies.
 
 ----
 
-__Fig. 11__: Using [Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m](Fig11_time_series_nino34_and_wwv_and_sst_and_ohc.m) to plot time series of observed and simulated N34 values and WWV anomalies.
+__Fig. 11__: Plotting equatorial isotherm distribution with [Fig10_20_degrees_isotherm_depth.m](Fig10_20_degrees_isotherm_depth.m)
 
 __Fig. 12__: Calculation of the WWV budget over the 1979-2016 period with [Fig12_time_series_wwv_transport.m](Fig12_time_series_wwv_transport.m)
 
