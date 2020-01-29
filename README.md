@@ -61,11 +61,12 @@ __Fig. 10__: Using [Fig11_time_series_nino34_and_wwv.m](Fig11_time_series_nino34
 
 __Fig. 11__: Plotting equatorial isotherm distribution with [Fig10_20_degrees_isotherm_depth.m](Fig10_20_degrees_isotherm_depth.m)
 
-__Fig. 12__: Calculation of the WWV budget over the 1979-2016 period with [Fig12_time_series_wwv_transport.m](Fig12_time_series_wwv_transport.m)
+__Fig. 12__: Calculation of the WWV budget over the 1979-2016 period with [Fig12_14_time_series_wwv_transport.m](Fig12_14_time_series_wwv_transport.m)
 
 __Fig. 13__: Creating equatorial transects as in Fig. 6 and Fig. 8 with [Fig13_equatorial_transects_during_LN1988.m](Fig13_equatorial_transects_during_LN1988.m) The first part of the script saves the equatorial data in data/ACCESS-OM2_output*varsat_Eq.mat which are then loaded in and plotted
 
-__Fig. 14__: Create lag regression with [Fig14_lag_regression_of_wwv_terms_and_N34.m](Fig14_lag_regression_of_wwv_terms_and_N34.m) while loading in the saved time series from the data/WMT_time_series_1979-2016.mat workspace
+__Fig. 14__: Create composite time series of the three strong El Niño and La Niña events using the WWV budget time series from Fig. 12 and the script [Fig12_14_time_series_wwv_transport.m](Fig12_14_time_series_wwv_transport.m)
+
 
 __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python ([Fig15_visualizing_script_barplot.py](Fig15_visualizing_script_barplot.py)) and then add the individual bar plots together in [Fig15_barplot_wwv_contributing_terms.pptx](Fig15_barplot_wwv_contributing_terms.pptx). Fig15_visualizing_script_barplot.py acts as an example, the scripts for the five other events are, except for the hard-coded data, identical. I choose this approach with a separate script for each event as it was the fastest that worked the first time.
 
