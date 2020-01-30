@@ -70,6 +70,7 @@ __Fig. 14__: Create composite time series of the three strong El Niño and La Niñ
 
 __Fig. 15__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python ([Fig15_visualizing_script_barplot.py](Fig15_visualizing_script_barplot.py)) and then add the individual bar plots together in [Fig15_barplot_wwv_contributing_terms.pptx](Fig15_barplot_wwv_contributing_terms.pptx). Fig15_visualizing_script_barplot.py acts as an example, the scripts for the five other events are, except for the hard-coded data, identical. I choose this approach with a separate script for each event as it was the fastest that worked the first time.
 
+[OLD_Fig14_lag_regression_of_wwv_terms_and_N34.m](OLD_Fig14_lag_regression_of_wwv_terms_and_N34.m) is the script creating a lag regression of the WWV budget terms. This figure is not in the manuscript anymore.
 
 # Data folder
 - __equatorial_transect_workspace__:

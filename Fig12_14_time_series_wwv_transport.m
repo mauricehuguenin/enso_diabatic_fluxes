@@ -796,6 +796,10 @@ load([directory 'WMT_time_series_1979-2016.mat']);
 % (4) dVaf -> the 5-month running mean filtered anomalous time series
 % -------------------------------------------------------------------------
 
+% combining neutral diffusion and skew diffusion into one term
+eddy_mixingaf = neutralaf + skewaf; clear neutralaf skewaf;
+
+
 load('/home/z5180028/MSC_thesis/access_matlab_scripts/workspace_regression_patterns_PC1_equal_nino34_rev2.mat', 'PC1');
 nino = PC1; clear PC1;
 
@@ -879,14 +883,14 @@ set(h55, 'interpreter', 'latex', 'fontsize', 11, 'Edgecolor', [.83 .83 .83]);
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 subplot(2,1,2)
 
-h11 = plot(ticks, neutralaf, 'color', RdYlGn(10,:), 'linewidth', 1.5); hold on;
+% h11 = plot(ticks, neutralaf, 'color', RdYlGn(10,:), 'linewidth', 1.5); hold on;
 h5 = plot(ticks, forcingaf, 'color', RdYlBu(60,:), 'linewidth', 1.5); hold on;
 h4 = plot(ticks, mixingaf, 'color', antarctica(15,:), 'linewidth', 1.5); hold on;
-h6 = plot(ticks, skewaf, 'color', antarctica(5,:), 'linewidth', 1.5); hold on;
+h6 = plot(ticks, eddy_mixingaf, 'color', antarctica(5,:), 'linewidth', 1.5); hold on;
 % h99 = plot(ticks, rest, 'color', antarctica(1,:), 'linewidth', 2); hold on;
 h7 = plot(ticks, numerical, 'color', [187,0,187]/255, 'linewidth', 1.5); hold on;
 h8 = plot(ticks, nino*10, 'color', 'k', 'linewidth', 1.5, 'linestyle', '--'); hold on;
-h10 = plot(ticks, neutralaf+forcingaf+mixingaf+skewaf+numerical, ...
+h10 = plot(ticks, eddy_mixingaf+forcingaf+mixingaf+numerical, ...
     'color', [.45 .45 .45], 'linewidth', 1.5); hold on;
 hXLabel = xlabel('Year');
 hYLabel = ylabel(['Sv, N34 [$^{\circ}$C]'],'interpreter','latex', 'color', RdYlBu(60,:));
@@ -945,12 +949,11 @@ xlim([1 length(dV)]);
 pbaspect([a]);                        % aspect ratios: x, y, z% 
 clear hTitle hXLabel hYLabel h1 h2;
 
-h55 = legend([h8 h5 h4 h6 h11 h7 h10], ...
+h55 = legend([h8 h5 h4 h6 h7 h10], ...
     'N34', ...    
     '$\mathcal{G_F}$: Surface forcing', ...
     '$\mathcal{G_M}$: Vertical mixing', ...
-    '$\mathcal{G_E}$: Skew diffusion', ...
-    '$\mathcal{G_N}$: Neutral diffusion', ...    
+    '$\mathcal{G_E}$: Eddy mixing', ...
     '$\mathcal{G_I}$: Numerical mixing', ...
     'Total diabatic', ...
     'location', 'southwest', 'orientation', 'horizontal');
@@ -960,7 +963,7 @@ clearvars -except ...
     dV horizontal ITF mass forcing mixing neutral skew numerical ...
     dVc horizontalc ITFc massc forcingc mixingc neutralc skewc...
     dVa horizontala ITFa massa forcinga mixinga neutrala skewa ...
-    dVaf horizontalaf ITFaf massaf forcingaf mixingaf neutralaf skewaf ...
+    dVaf horizontalaf ITFaf massaf forcingaf mixingaf eddy_mixingaf ...
     antarctica table_EN table_LN ts_len implicit first_num ticks wwv EN LN ...
     RdYlBu RdYlGn Reds Blues nino a;
 % finished fancy plot
@@ -976,6 +979,10 @@ print('-dpng','-r300', [directory 'WMT_time_series_1979-2016']);
 clear; clc;
 directory = '/home/z5180028/MSC_thesis/access_figures/';
 load([directory 'WMT_time_series_1979-2016.mat']);
+
+% combining neutral diffusion and skew diffusion into one term
+eddy_mixingaf = neutralaf + skewaf; clear neutralaf skewaf;
+
 
 load('/home/z5180028/MSC_thesis/access_matlab_scripts/workspace_regression_patterns_PC1_equal_nino34_rev2.mat', 'PC1');
 nino = PC1; clear PC1;
@@ -1001,6 +1008,8 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     % vertical line
     set(line([12 12], [-20 25]), 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
 end
+boom; % prevent the first plot from showing up
+
 % ----- N34 index centered around December of the three events
 
 % -------------------------------------------------------------------------
@@ -1016,10 +1025,9 @@ comp_massaf_a = (massaf(EN(1):EN(2))+massaf(EN(3):EN(4))+massaf(EN(5):EN(6)))/3;
 comp_ITFaf_a = (ITFaf(EN(1):EN(2))+ITFaf(EN(3):EN(4))+ITFaf(EN(5):EN(6)))/3;
 comp_dVaf_a = (dVaf(EN(1):EN(2))+dVaf(EN(3):EN(4))+dVaf(EN(5):EN(6)))/3;
 
-comp_neutralaf_a = (neutralaf(EN(1):EN(2))+neutralaf(EN(3):EN(4))+neutralaf(EN(5):EN(6)))/3;
 comp_forcingaf_a = (forcingaf(EN(1):EN(2))+forcingaf(EN(3):EN(4))+forcingaf(EN(5):EN(6)))/3;
 comp_mixingaf_a = (mixingaf(EN(1):EN(2))+mixingaf(EN(3):EN(4))+mixingaf(EN(5):EN(6)))/3;
-comp_skewaf_a = (skewaf(EN(1):EN(2))+skewaf(EN(3):EN(4))+skewaf(EN(5):EN(6)))/3;
+comp_eddy_mixingaf_a = (eddy_mixingaf(EN(1):EN(2))+eddy_mixingaf(EN(3):EN(4))+eddy_mixingaf(EN(5):EN(6)))/3;
 comp_numerical_a = (numerical(EN(1):EN(2))+numerical(EN(3):EN(4))+numerical(EN(5):EN(6)))/3;
 
 % preparation of composite time series
@@ -1029,10 +1037,9 @@ comp_massaf_b = (massaf(LN(1):LN(2))+massaf(LN(3):LN(4))+massaf(LN(5):LN(6)))/3;
 comp_ITFaf_b = (ITFaf(LN(1):LN(2))+ITFaf(LN(3):LN(4))+ITFaf(LN(5):LN(6)))/3;
 comp_dVaf_b = (dVaf(LN(1):LN(2))+dVaf(LN(3):LN(4))+dVaf(LN(5):LN(6)))/3;
 
-comp_neutralaf_b = (neutralaf(LN(1):LN(2))+neutralaf(LN(3):LN(4))+neutralaf(LN(5):LN(6)))/3;
 comp_forcingaf_b = (forcingaf(LN(1):LN(2))+forcingaf(LN(3):LN(4))+forcingaf(LN(5):LN(6)))/3;
 comp_mixingaf_b = (mixingaf(LN(1):LN(2))+mixingaf(LN(3):LN(4))+mixingaf(LN(5):LN(6)))/3;
-comp_skewaf_b = (skewaf(LN(1):LN(2))+skewaf(LN(3):LN(4))+skewaf(LN(5):LN(6)))/3;
+comp_eddy_mixingaf_b = (eddy_mixingaf(LN(1):LN(2))+eddy_mixingaf(LN(3):LN(4))+eddy_mixingaf(LN(5):LN(6)))/3;
 comp_numerical_b = (numerical(LN(1):LN(2))+numerical(LN(3):LN(4))+numerical(LN(5):LN(6)))/3;
 
 
@@ -1046,6 +1053,7 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     set(line([12 12], [b]), 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
     set(gca,'XLim',[1 24],'XTick',[0:4:24])
   
+    % plot adiabatic time series and total change in warm water volume
     h2 = plot(horizontalaf(EN(e):EN(e+1)), 'color', RdYlBu(10,:), 'linewidth', .5); hold on;
     h6 = plot(massaf(EN(e):EN(e+1)), 'color', RdYlBu(21,:), 'linewidth', .5); hold on;
     h8 = plot(ITFaf(EN(e):EN(e+1)), 'color', RdYlGn(60,:), 'linewidth', .5); hold on;
@@ -1063,17 +1071,19 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     h88 = plot(comp_ITFaf_a, 'color', RdYlGn(60,:), 'linewidth', 2); hold on;
     h11 = plot(comp_dVaf_a, 'color', [0 0 0], 'linewidth', 2); hold on;
 
-    hYLabel = ylabel(['Sv'],'interpreter','latex');
+    hYLabel = ylabel(['Sv'],'interpreter','latex'); % y-label
     set([hYLabel], 'interpreter', 'latex', 'Fontsize', 25, 'color', RdYlBu(60,:));
     set(gca,'Fontname', 'Times New Roman', 'FontSize', 25);
+    % plot specific options (grid, ticks, colours, etc.)
     set(gca, ...
       'Box', 'off','TickDir','out','TickLength',[.01 .01],'XMinorTick','off', ...
-      'YMinorTick','off','YGrid','on','YTick',-25:10:20,'XColor',RdYlBu(60,:)  , ...
+      'YMinorTick','off','YGrid','on','YTick',-30:10:20,'XColor',RdYlBu(60,:)  , ...
       'YColor',RdYlBu(60,:),'ticklabelinterpreter', 'latex','LineWidth',1.25);
     pbaspect([a]);                        % aspect ratios: x, y, z% 
     ylim([b]);
     clear hTitle hXLabel hYLabel h1 h2;
-    text(-2, 29, 'a) El Ni\~no', 'interpreter', 'latex', 'Fontsize', 25, ...
+    % adding subplot labels and text
+    text(-2, 29, 'a) Composite El Ni\~no', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
     text(-7, -18, 'Adiabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0], 'rotation',90); 
@@ -1087,6 +1097,9 @@ for e = [1,3,5]         % loop through the three events EN82/83,
         'location', 'northeast', 'orientation', 'vertical');
     set(h55, 'interpreter', 'latex', 'fontsize', 11, 'Edgecolor', [.83 .83 .83]);
 
+    % for the other three subplots I use the same procedure, i.e.
+    % copy-paste the code while changing the time series
+    
     subplot(2,2,2)      % adiabatic terms for La Nina
     h2 = plot(horizontalaf(LN(e):LN(e+1)), 'color', RdYlBu(10,:), 'linewidth', .5); hold on;
     h6 = plot(massaf(LN(e):LN(e+1)), 'color', RdYlBu(21,:), 'linewidth', .5); hold on;
@@ -1110,7 +1123,7 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     set(gca,'Fontname', 'Times New Roman', 'FontSize', 25);
     set(gca, ...
       'Box', 'off','TickDir','out','TickLength',[.01 .01],'XMinorTick','off', ...
-      'YMinorTick','off','YGrid','on','YTick',-25:10:20,'XColor',RdYlBu(60,:)  , ...
+      'YMinorTick','off','YGrid','on','YTick',-30:10:20,'XColor',RdYlBu(60,:)  , ...
       'YColor',RdYlBu(60,:),'ticklabelinterpreter', 'latex','LineWidth',1.25);
     pbaspect([a]);                        % aspect ratios: x, y, z% 
     ylim([b]);
@@ -1118,14 +1131,13 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     set(line([12 12], [b]), 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
     set(gca,'XLim',[1 24],'XTick',[0:4:24])
 
-    text(-2, 29, 'b) La Ni\~na', 'interpreter', 'latex', 'Fontsize', 25, ...
+    text(-2, 29, 'b) Composite La Ni\~na', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
     
     subplot(2,2,3)      % diabatic terms for El Nino
-    h11 = plot(neutralaf(EN(e):EN(e+1)), 'color', RdYlGn(10,:), 'linewidth', .5); hold on;
     h5 = plot(forcingaf(EN(e):EN(e+1)), 'color', RdYlBu(60,:), 'linewidth', .5); hold on;
     h4 = plot(mixingaf(EN(e):EN(e+1)), 'color', antarctica(15,:), 'linewidth', .5); hold on;
-    h6 = plot(skewaf(EN(e):EN(e+1)), 'color', antarctica(5,:), 'linewidth', .5); hold on;
+    h6 = plot(eddy_mixingaf(EN(e):EN(e+1)), 'color', antarctica(5,:), 'linewidth', .5); hold on;
     h7 = plot(numerical(EN(e):EN(e+1)), 'color', [187,0,187]/255, 'linewidth', .5); hold on;
     h8 = plot(nino(EN(e):EN(e+1))*10, 'color', 'k', 'linewidth', .5, 'linestyle', '--'); hold on;
     
@@ -1138,9 +1150,8 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     h8.Color(4) = .4;
 
     % composite mean as thicker lines
-    h111 = plot(comp_neutralaf_a, 'color', RdYlGn(10,:), 'linewidth', 2); hold on;
     h55 = plot(comp_forcingaf_a, 'color', RdYlBu(60,:), 'linewidth', 2); hold on;
-    h66 = plot(comp_skewaf_a, 'color', antarctica(5,:), 'linewidth', 2); hold on;
+    h66 = plot(comp_eddy_mixingaf_a, 'color', antarctica(5,:), 'linewidth', 2); hold on;
     h77 = plot(comp_numerical_a, 'color', [187,0,187]/255, 'linewidth', 2); hold on;
     h44 = plot(comp_mixingaf_a, 'color', antarctica(15,:), 'linewidth', 2); hold on;
     h88 = plot(comp_nino_a*10, 'color', 'k', 'linewidth', 2, 'linestyle', '--'); hold on;
@@ -1151,7 +1162,7 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     set(gca,'Fontname', 'Times New Roman', 'FontSize', 25);
     set(gca, ...
         'Box', 'off','TickDir','out','TickLength',[.01 .01],'XMinorTick','off', ...
-        'YMinorTick','off','YGrid','on','YTick',-25:10:20,'XColor',RdYlBu(60,:)  , ...
+        'YMinorTick','off','YGrid','on','YTick',-30:10:20,'XColor',RdYlBu(60,:)  , ...
         'YColor',RdYlBu(60,:),'ticklabelinterpreter', 'latex','LineWidth',1.25);
     pbaspect([a]);                        % aspect ratios: x, y, z% 
     ylim([-16 20]);
@@ -1159,16 +1170,15 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     set(line([12 12], [b]), 'color', [0.8784 0.8824 0.9373], 'linewidth', 1.25);
     set(gca,'XLim',[1 24],'XTick',[0:4:24])
 
-    text(-2, 29, 'c)', 'interpreter', 'latex', 'Fontsize', 25, ...
+    text(-2, 25, 'c)', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
-    text(-7, -18, 'Diabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
+    text(-7, -9, 'Diabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0], 'rotation',90); 
      
     subplot(2,2,4)      % diabatic terms for La Nina
-    h11 = plot(neutralaf(LN(e):LN(e+1)), 'color', RdYlGn(10,:), 'linewidth', .5); hold on;
     h5 = plot(forcingaf(LN(e):LN(e+1)), 'color', RdYlBu(60,:), 'linewidth', .5); hold on;
     h4 = plot(mixingaf(LN(e):LN(e+1)), 'color', antarctica(15,:), 'linewidth', .5); hold on;
-    h6 = plot(skewaf(LN(e):LN(e+1)), 'color', antarctica(5,:), 'linewidth', .5); hold on;
+    h6 = plot(eddy_mixingaf(LN(e):LN(e+1)), 'color', antarctica(5,:), 'linewidth', .5); hold on;
     h7 = plot(numerical(LN(e):LN(e+1)), 'color', [187,0,187]/255, 'linewidth', .5); hold on;
     h8 = plot(nino(LN(e):LN(e+1))*10, 'color', 'k', 'linewidth', .5, 'linestyle', '--'); hold on;
 
@@ -1181,9 +1191,8 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     h8.Color(4) = .4;
     
     % composite mean as thicker lines
-    h111 = plot(comp_neutralaf_b, 'color', RdYlGn(10,:), 'linewidth', 2); hold on;
     h55 = plot(comp_forcingaf_b, 'color', RdYlBu(60,:), 'linewidth', 2); hold on;
-    h66 = plot(comp_skewaf_b, 'color', antarctica(5,:), 'linewidth', 2); hold on;
+    h66 = plot(comp_eddy_mixingaf_b, 'color', antarctica(5,:), 'linewidth', 2); hold on;
     h77 = plot(comp_numerical_b, 'color', [187,0,187]/255, 'linewidth', 2); hold on;
     h44 = plot(comp_mixingaf_b, 'color', antarctica(15,:), 'linewidth', 2); hold on;
     h88 = plot(comp_nino_b*10, 'color', 'k', 'linewidth', 2, 'linestyle', '--'); hold on;
@@ -1194,7 +1203,7 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     set(gca,'Fontname', 'Times New Roman', 'FontSize', 25);
     set(gca, ...
         'Box', 'off','TickDir','out','TickLength',[.01 .01],'XMinorTick','off', ...
-        'YMinorTick','off','YGrid','on','YTick',-25:10:20,'XColor',RdYlBu(60,:)  , ...
+        'YMinorTick','off','YGrid','on','YTick',-30:10:20,'XColor',RdYlBu(60,:)  , ...
         'YColor',RdYlBu(60,:),'ticklabelinterpreter', 'latex','LineWidth',1.25);
     pbaspect([a]);                        % aspect ratios: x, y, z% 
     ylim([-16 20]);
@@ -1203,29 +1212,25 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     set(gca,'XLim',[1 24],'XTick',[0:4:24])
     % set(gca,'xticklabel',({'Jan.','Apr.','Jul.','Sep.', 'Dec.'}))
     
-    text(-2, 29, 'd)', 'interpreter', 'latex', 'Fontsize', 25, ...
+    text(-2, 25, 'd)', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
 
     % custom axis labels which I later use for the N34 axis on the right
     % hand side
-    set(gca,'yticklabel',({'-2.5','-1.5','-0.5','0.5','1.5'}))
+    set(gca,'yticklabel',({'-3','-2','-1','0','1','2'}))
 
-%     h55 = legend([h88 h55 h44 h66 h111 h77], ...
-%         'N34', ...    
-%         '$\mathcal{G_F}$: Surface forcing', ...
-%         '$\mathcal{G_M}$: Vertical mixing', ...
-%         '$\mathcal{G_E}$: Skew diffusion', ...
-%         '$\mathcal{G_N}$: Neutral diffusion', ...    
-%         '$\mathcal{G_I}$: Numerical mixing', ...
-%         'location', 'northeast', 'orientation', 'vertical');
-%     set(h55, 'interpreter', 'latex', 'fontsize', 11, 'Edgecolor', [.83 .83 .83]);
+    h55 = legend([h88 h55 h44 h66 h77], ...
+        'N34', ...    
+        '$\mathcal{G_F}$: Surface forcing', ...
+        '$\mathcal{G_M}$: Vertical mixing', ...
+        '$\mathcal{G_E}$: Eddy mixing', ...
+        '$\mathcal{G_I}$: Numerical mixing', ...
+        'location', 'northeast', 'orientation', 'vertical');
+    set(h55, 'interpreter', 'latex', 'fontsize', 11, 'Edgecolor', [.83 .83 .83]);
 
 end
 
-
-
-% plot(nino(48:61))
-
+% printing figure
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
 directory = '/home/z5180028/MSC_thesis/access_figures/';
