@@ -8,7 +8,7 @@
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %  
 first = 'output020'; % first output in time period, output020 = year 1979
 first_num = 20;
-ts_len = 46; % last output entry, i.e. ts_len = 25 -> output025
+ts_len = 57; % last output entry, i.e. ts_len = 25 -> output025
 
 
 %% [2.3 sec.] load in workspace
@@ -226,11 +226,12 @@ toc;
 %% [7.6 seconds] plotting routine
 tic;
 figure;
-set(gcf,'Position',[1          36        1920         970]);
+set(gcf,'Position',[1          36        1250         1000]);
 for i=1:4
 subplot(3,2,i);
 hold on;
 if i == 1
+    % climatological isotherm position from World Ocean Atlas
     [c2,h2] = contour(Xw-356,-Zw,WOA,[20 20], ...
         'color', [.6 .6 .6],'linewidth', 2.5, 'linestyle', '--'); hold on;
     [c1,h1] = contour(Xm,-Zm,isotherm_iclimm,[20 20], ...
@@ -271,9 +272,13 @@ end
 ylim([-350 0]);
 xlim([-220 -80]);
 
-set(gca,'XTickLabel',{'','$160^{\circ}$E','','$160^{\circ}$W','', ...
-                         '$120^{\circ}$W', '', '$80^{\circ}$W'}, ...
+% set(gca,'XTickLabel',{'','$160^{\circ}$E','','$160^{\circ}$W','', ...
+%                          '$120^{\circ}$W', '', '$80^{\circ}$W'}, ...
+%                          'ticklabelinterpreter', 'latex', 'FontSize', 16);
+set(gca,'XTickLabel',{'$160^{\circ}$E','$150^{\circ}$W', ...
+                         '$100^{\circ}$W'}, ...
                          'ticklabelinterpreter', 'latex', 'FontSize', 16);
+
     set(gca, ...
       'Box'             , 'off'         , ...
       'TickDir'         , 'out'         , ...
@@ -294,13 +299,13 @@ set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 14);
 
 % add custom labels
 % - El Nino
-text(-140, -25, 'La Ni\~na', 'interpreter', 'latex', 'Fontsize', 16, ...
+text(-210, -225, 'La Ni\~na', 'interpreter', 'latex', 'Fontsize', 16, ...
  'color', RdYlBu(52,:));
 % - La Nina
-text(-170, -25, 'El Ni\~no', 'interpreter', 'latex', 'Fontsize', 16, ...
+text(-210, -275, 'El Ni\~no', 'interpreter', 'latex', 'Fontsize', 16, ...
  'color', RdYlBu(8,:));
 % - CLIM
-text(-200, -25, 'Climatology', 'interpreter', 'latex', 'Fontsize', 16, ...
+text(-210, -325, 'Climatology', 'interpreter', 'latex', 'Fontsize', 16, ...
  'color', 'k');
 
 
@@ -358,7 +363,7 @@ end
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
 directory = '/home/z5180028/MSC_thesis/access_figures/';
-print('-dpng','-r300', [directory 'thermocline_depth_transects_including_access']);
+print('-dpng','-r500', [directory 'thermocline_depth_transects_including_access']);
 
 toc;
 
