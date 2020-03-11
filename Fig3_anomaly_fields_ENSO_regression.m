@@ -26,20 +26,20 @@ set(h,'linestyle','none'); hold on;
 m_coast('color',[.1 .1 .1]); % black coastline
 m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 12, 'color', RdYlBu(60,:), 'linewidth', .5);
+    'Fontsize', 18, 'color', RdYlBu(60,:), 'linewidth', .5);
 
 col_limit = [-1.5 1.5];
  set(gca, 'clim', [col_limit(1) col_limit(2)]); hold on; % set colour limit
 
 h3 = colorbar('color', [.1922 .2118 .5843], 'box', 'on', ...
     'tickdirection', 'in', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 14);
+    'Fontsize', 18);
 h = ylabel(h3, '[°C]', 'color', RdYlBu(60,:), ...
-    'Fontname', 'Times New Roman', 'Fontsize', 12);
+    'Fontname', 'Times New Roman', 'Fontsize', 18);
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
-text([-3.75 -3.75],[2 2],'a) Air temperature [°C]', 'fontname', 'Times New Roman', ...
-       'fontsize', 16, 'color', 'k');
+text([-3.75 -3.75],[2.25 2.25],'a) Air temperature [°C]', 'fontname', 'Times New Roman', ...
+       'fontsize', 20, 'color', 'k');
 
 subplot(2,2,2); % SPECIFIC HUMIDITY
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,20 +53,20 @@ set(h,'linestyle','none'); hold on;
 m_coast('color',[.1 .1 .1]); % black coastline
 m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 12, 'color', RdYlBu(60,:), 'linewidth', .5);
+    'Fontsize', 18, 'color', RdYlBu(60,:), 'linewidth', .5);
 
 col_limit = [-1e-3,1e-3];
  set(gca, 'clim', [col_limit(1) col_limit(2)]); hold on; % set colour limit
 
 h3 = colorbar('color', [.1922 .2118 .5843], 'box', 'on', ...
     'tickdirection', 'in', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 14);
+    'Fontsize', 18);
 h = ylabel(h3, '[kg kg^{-1}]', 'color', RdYlBu(60,:), ...
-    'Fontname', 'Times New Roman', 'Fontsize', 12);
+    'Fontname', 'Times New Roman', 'Fontsize', 18);
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
-text([-3.75 -3.75],[2 2],'b) Specific humidity [kg kg^{-1}]', 'fontname', 'Times New Roman', ...
-       'fontsize', 16, 'color', 'k');
+text([-3.75 -3.75],[2.25 2.25],'b) Specific humidity [kg kg^{-1}]', 'fontname', 'Times New Roman', ...
+       'fontsize', 20, 'color', 'k');
 
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
@@ -85,20 +85,20 @@ set(h,'linestyle','none'); hold on;
 m_coast('color',[.1 .1 .1]); % black coastline
 m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 14, 'color', RdYlBu(60,:), 'linewidth', .5);
+    'Fontsize', 18, 'color', RdYlBu(60,:), 'linewidth', .5);
 
 col_limit = [-25 25];
  set(gca, 'clim', [col_limit(1) col_limit(2)]); hold on; % set colour limit
 
 h3 = colorbar('color', [.1922 .2118 .5843], 'box', 'on', ...
     'tickdirection', 'in', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 12);
+    'Fontsize', 18);
 h = ylabel(h3, '[W m^{-2}]', 'color', RdYlBu(60,:), ...
-    'Fontname', 'Times New Roman', 'Fontsize', 12);
+    'Fontname', 'Times New Roman', 'Fontsize', 18);
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
-text([-3.75 -3.75],[2 2],'c) Downward short-wave [W m^{-2}]', 'fontname', 'Times New Roman', ...
-       'fontsize', 16, 'color', 'k');
+text([-3.75 -3.75],[2.25 2.25],'c) Downward short-wave [W m^{-2}]', 'fontname', 'Times New Roman', ...
+       'fontsize', 20, 'color', 'k');
 
 subplot(2,2,4); % Downward short-wave
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,20 +117,20 @@ clabel(cs, h);
 m_coast('color',[.1 .1 .1]); % black coastline
 m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 14, 'color', RdYlBu(60,:), 'linewidth', .5);
+    'Fontsize', 18, 'color', RdYlBu(60,:), 'linewidth', .5);
 
 col_limit = [-40 40];
  set(gca, 'clim', [col_limit(1) col_limit(2)]); hold on; % set colour limit
 
 h3 = colorbar('color', [.1922 .2118 .5843], 'box', 'on', ...
     'tickdirection', 'in', 'Fontname', 'Times New Roman', ...
-    'Fontsize', 12);
+    'Fontsize', 18);
 h = ylabel(h3, '[hPa]', 'color', RdYlBu(60,:), ...
-    'Fontname', 'Times New Roman', 'Fontsize', 12);
+    'Fontname', 'Times New Roman', 'Fontsize', 18);
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
-text([-3.75 -3.75],[2 2],'d) Sea level pressure [hPa]', 'fontname', 'Times New Roman', ...
-       'fontsize', 16, 'color', 'k');
+text([-3.75 -3.75],[2.25 2.25],'d) Sea level pressure [hPa]', 'fontname', 'Times New Roman', ...
+       'fontsize', 20, 'color', 'k');
 
 
 % finish fancy plot and print
