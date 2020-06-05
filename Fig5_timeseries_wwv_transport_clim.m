@@ -15,7 +15,7 @@ antarctica = nature;
 RdBu_short  = cbrewer('div', 'RdBu', 21, 'PCHIP');
 RdYlGn  = cbrewer('div', 'RdYlGn', 60, 'PCHIP');
 
-% prepare mask                  % importante!     
+% prepare mask                  % importante!       % wwv region 20S - 20N
                                 % wwv_mask(117:840, 417:580) = 20S - 20N
                                 % wwv_mask(117:840, 466:531) = 8S - 8N
                                 % wwv_mask(117:840, 478:518) = 5S - 5N
@@ -26,11 +26,9 @@ Blues = cbrewer('seq', 'Blues', 16, 'PCHIP');
 wwv_mask = wwv_mask(91:811,478:518);
 wwv_mask_2S = wwv_mask_2S(91:811,478:518);
 wwv_mask_2S_borneo = wwv_mask_2S_borneo(91:811,478:518);
-% only select lon and latitude values for the WWV region
 lon = lon(91:811,478:518);
 lat = lat(91:811,478:518);
-% testmap(lon, lat, wwv_mask_2S_borneo);
-
+testmap(lon, lat, wwv_mask_2S_borneo);
 
 antarctica =    [150,   0,  17; 165,   0,  33; 200,   0,  40; ...
                  216,  21,  47; 247,  39,  53; 255,  61,  61; ...
@@ -40,18 +38,25 @@ antarctica =    [150,   0,  17; 165,   0,  33; 200,   0,  40; ...
                   61, 135, 255;  40,  87, 255;  24,  28, 247; ...
                   30,   0, 230;  36,   0, 216;  45,   0, 200]*1./255;
 
-              
-%% calculating the very first data entry for the WWV
-% as I take the derivative I need 13 data points, this data is from the 
-% restart file ocean_temp_salt.res.nc
-% -> taking the derivative of a 13 data time series then gives a 12 data
-% time series
-                                                            
+%% preamble and data preparation for warm water volume
+
+                                % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+                                % location_tahiti        = [523, 427] %
+                                % location_center_nino34 = [540, 498] %
+                                % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+                           
+                                
+            % importante!       % wwv region 20S - 20N
+                                % wwv_mask(117:840, 417:580) = 20S - 20N
+                                % wwv_mask(117:840, 466:531) = 8S - 8N
+                                
+                                
 first = 'EXP1';   second = 'EXP2';  restart = 'restart000';   
 string = [first '_and_' second '_' restart];
 
 tic;
 % load in potential temperature
+% p1 = ['/srv/ccrc/data15/z5180028/MSC_thesis_mom_output/' first '_and_' second '_' restart '_windstress/output000/'];
 pc = 'H:\Maurice_ENSO_Data\EXP0_control_run/';
 
 
@@ -81,8 +86,8 @@ clear temp_resc1 temp_resc2 temp_resc3 temp_resc4 temp_resc5 temp_resc6;
 
 % now finding temperature within it which is higher than 20 degrees
 maskcr = temp_resc;
-indices = find(maskcr < neutral_rho(47));  maskcr(indices) = 0; clear indices;
-indices = find(maskcr >= neutral_rho(47)); maskcr(indices) = 1; clear indices;
+indices = find(maskcr < 20.5);  maskcr(indices) = 0; clear indices;
+indices = find(maskcr >= 20.5); maskcr(indices) = 1; clear indices;
 
 
 
@@ -109,8 +114,8 @@ thetaoc = squeeze(permute(getnc([pc 'ocean_snap_clim.nc'], 'temp', ...
 
 % now finding temperature within it which is higher than 20 degrees
 maskc = thetaoc;
-indices = find(maskc < neutral_rho(47));  maskc(indices) = 0; clear indices;
-indices = find(maskc >= neutral_rho(47)); maskc(indices) = 1; clear indices;
+indices = find(maskc < 20);  maskc(indices) = 0; clear indices;
+indices = find(maskc >= 20); maskc(indices) = 1; clear indices;
 
 
 % loading in climatology
@@ -342,36 +347,167 @@ forcingc = movmean(forcingc(1:12),3);
 mixingc = movmean(mixingc(1:12),3);
 implicit = dV - horizontal - ITFc - forcingc - mixingc;
 
-% dV = dV(1:12);
-% horizontal = horizontal(1:12);
-% ITFc = ITFc(1:12);
-% massc = massc(1:12);
-% 
-% forcingc = forcingc(1:12);
-% mixingc = mixingc(1:12);
-% implicit = dV - horizontal - ITFc - forcingc - mixingc;
-
 
 %% clean up  workspace before plotting
+clear ans areacello bathymetry cto ctoc dzt dztc h7 h8 h9 lat lev_bnds lon;
+clear mask maskc  so soc_3 soc_4 thetao thetaoc volcello; 
+clear volume volumec z h3 h4 h5 h1 h2 net_sfcc;
+clear soc i sstc tempc;
+clear p1 p2 p3 p4 p5 pc tx_trans ty_trans wwv_region;
+clear a neutral_rho;
+clear cbt cbtc cp delta_t dT eta etac forcing  frazil frazilc GF;
+clear GFc GM GMc GJ GJc maskcr maskr mass mixing non nonc;
+clear rho_0 sbc sbcc sw swc wwv_mask wwv_mask_2S ty_transc t;
 
-clearvars -except dV horizontal massc ITFc forcingc mixingc implicit ...
-    RdYlBu RdYlGn antarctica f3
-% clear ans areacello bathymetry cto ctoc dzt dztc h7 h8 h9 lat lev_bnds lon;
-% clear mask maskc  so soc_3 soc_4 thetao thetaoc volcello; 
-% clear volume volumec z h3 h4 h5 h1 h2 net_sfcc;
-% clear soc i sstc tempc;
-% clear p1 p2 p3 p4 p5 pc tx_trans ty_trans wwv_region;
-% clear a neutral_rho;
-% clear cbt cbtc cp delta_t dT eta etac forcing  frazil frazilc GF;
-% clear GFc GM GMc GJ GJc maskcr maskr mass mixing non nonc;
-% clear rho_0 sbc sbcc sw swc wwv_mask wwv_mask_2S ty_transc t;
 
+%% ~~~~~~~~~~~ plotting  routine for meridional figure ~~~~~~~~~~~ %% 
+
+clc
+% delta_t = 30*24*60*60;
+% nanmean(dV(1:12)) * delta_t * 1e6
+% nanmean(horizontal(1:12))* delta_t * 1e6
+% nanmean(ITFc(1:12))* delta_t * 1e6
+% nanmean(massc(1:12))* delta_t * 1e6
+% nanmean(forcingc(1:12))* delta_t * 1e6
+% nanmean(mixingc(1:12))* delta_t * 1e6
+% nanmean(implicit(1:12))* delta_t * 1e6
+
+
+figure('units', 'pixels', 'position', [0 0 1080 1080]);
+subplot(2,1,1)
+% figure('units', 'pixels', 'position', [0 0 1500 960]);
+% h6 = plot(1:12, massc, 'color', RdYlBu(21,:), 'linewidth', 2.5); hold on;
+% h2 = plot(1:12, horizontal, 'color', RdYlBu(10,:), 'linewidth', 2.5); hold on;
+% h8 = plot(1:12, ITFc, 'color', RdYlGn(60,:), 'linewidth', 2.5); hold on;
+h1 = plot(1:12, dV, 'color', [0 0 0], 'linewidth', 3); hold on;
+
+% calculate annual trend
+% trend_data = movmean(dV,3);
+% trend_data = trend_data(1:12); a = (trend_data(12) - trend_data(1)) / 12;
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ create fancy plot ~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+hYLabel = ylabel(['Sv'],'interpreter','latex');
+  
+%     % draw arrows to denote transport in and out
+% 	arrow([13.5 4], [13.5, 9], 'BaseAngle', 20, 'length', 2, 'width', .2, 'ends', [1], 'color', RdYlBu(60,:));
+% 	text([12.2 12.2],[11.5 11.5],'volume increase', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
+% 	arrow([13.5, -4], [13.5, -9], 'BaseAngle', 20, 'length', 2, 'width', .2, 'ends', [1], 'color', RdYlBu(60,:));
+% 	text([12.2 12.2],[-11.5 -11.5],'volume decrease', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
  
+
+set([hYLabel], 'interpreter', 'latex', 'Fontsize', 25);
+set(hYLabel, 'color', [0 0 0]);
+set(gca,'Fontname', 'Times New Roman', 'FontSize', 25);
+
+set(gca, ...
+  'Box'             , 'off'         , ...
+  'TickDir'         , 'out'         , ...
+  'TickLength'      , [.01 .01]     , ...
+  'XMinorTick'      , 'off'         , ...
+  'YMinorTick'      , 'off'         , ...
+  'YGrid'           , 'on'          , ...
+  'YTick'           , -60:10:60   , ...     % define grid, every 1000 m a grid line
+  'XColor'          , RdYlBu(60,:)  , ...
+  'YColor'          , RdYlBu(60,:)  , ...
+  'ticklabelinterpreter', 'latex'   , ...
+  'LineWidth'       , 1.25);
+  % 'GridLineStyle'   , '--'          , ...
+   
+
+
+set(gca, 'Xtick', [1:2:12]);
+
+ylim([-30 28]);
+xlim([1 12]);
+pbaspect([2 1 1]);                        % aspect ratios: x, y, z
+% h55 = legend([h1 h2 h3], 'location', 'northeast', 'orientation', 'vertical', ...
+%     'Change in WWV anomaly', 'Horizontal Transport', ...
+%     'Vertical Transport as residual');
+h55 = legend([h1 ], 'location', 'northwest', 'orientation', 'vertical', ...
+    'Change in WWV anomaly', ...
+    '$\mathcal{T}$(5$^{\circ}$N + 5$^{\circ}$S): Meridional transport', ...
+    '$\mathcal{T}$(ITF): Indonesian Throughflow', ...
+    '$\mathcal{J}$: Surface volume', ...
+    '$\mathcal{G_F}$: Surface forcing (2.8)', ...
+    '$\mathcal{G_M}$: Vertical mixing  (6.8)', ...
+    '$\mathcal{G_I}$: Numerical mixing  (3.1)');
+set(h55, 'interpreter', 'latex', 'fontsize', 18, 'textcolor', RdYlBu(60,:));
+
+clear hTitle hXLabel hYLabel h1 h2;
+
+text(-1, 31, 'a) Adiabatic processes', 'interpreter', 'latex', 'Fontsize', 25, ...
+     'color', [0 0 0]);
+
+
+subplot(2,1,2)
+% figure('units', 'pixels', 'position', [0 0 1500 960]);
+
+h4 = plot(1:12, mixingc, 'color', antarctica(15,:), 'linewidth', 2.5); hold on;
+h7 = plot(1:12, implicit, 'color', [187,0,187]/255, 'linewidth', 2.5); hold on;
+h5 = plot(1:12, forcingc, 'color', RdYlBu(60,:), 'linewidth', 2.5); hold on;
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~ create fancy plot ~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+hXLabel = xlabel('Month');
+hYLabel = ylabel(['Sv'],'interpreter','latex');
+  
+    % draw arrows to denote transport in and out
+% 	arrow([13.5 4], [13.5, 9], 'BaseAngle', 20, 'length', 2, 'width', .2, 'ends', [1], 'color', RdYlBu(60,:));
+% 	text([12.2 12.2],[11.5 11.5],'volume increase', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
+% 	arrow([13.5, -4], [13.5, -9], 'BaseAngle', 20, 'length', 2, 'width', .2, 'ends', [1], 'color', RdYlBu(60,:));
+% 	text([12.2 12.2],[-11.5 -11.5],'volume decrease', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(60,:));
+ 
+
+set([hXLabel, hYLabel], 'interpreter', 'latex', 'Fontsize', 25);
+set(hYLabel, 'color', [0 0 0]);
+set(gca,'Fontname', 'Times New Roman', 'FontSize', 25);
+
+set(gca, ...
+  'Box'             , 'off'         , ...
+  'TickDir'         , 'out'         , ...
+  'TickLength'      , [.01 .01]     , ...
+  'XMinorTick'      , 'off'         , ...
+  'YMinorTick'      , 'off'         , ...
+  'YGrid'           , 'on'          , ...
+  'YTick'           , -60:10:60   , ...     % define grid, every 1000 m a grid line
+  'XColor'          , RdYlBu(60,:)  , ...
+  'YColor'          , RdYlBu(60,:)  , ...
+  'ticklabelinterpreter', 'latex'   , ...
+  'LineWidth'       , 1.25);
+  % 'GridLineStyle'   , '--'          , ...
+   
+
+
+set(gca, 'Xtick', [1:2:12]);
+
+ylim([-30 28]);
+xlim([1 12]);
+pbaspect([2 1 1]);                        % aspect ratios: x, y, z
+% h55 = legend([h1 h2 h3], 'location', 'northeast', 'orientation', 'vertical', ...
+%     'Change in WWV anomaly', 'Horizontal Transport', ...
+%     'Vertical Transport as residual');
+h55 = legend([h5 h4  h7], 'location', 'southwest', 'orientation', 'vertical', ...
+    '$\mathcal{G_F}$: Surface forcing', ...
+    '$\mathcal{G_M}$: Vertical mixing', ...
+    '$\mathcal{G_I}$: Numerical mixing');
+set(h55, 'interpreter', 'latex', 'fontsize', 18, 'textcolor', RdYlBu(60,:));
+
+clear hTitle hXLabel hYLabel h1 h2;
+
+text(-1, 31, 'b) Diabatic processes', 'interpreter', 'latex', 'Fontsize', 25, ...
+     'color', [0 0 0]);
+
+% finished fancy plot
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
+directory = 'C:/Users/Maurice Huguenin/Desktop/';
+print('-dpng','-r300', [directory f3]);
+ 
+
 %% ~~~~~~~~~~~ plotting  routine for complete figure with subplots ~~~~~~~~~~~ %% 
 
 figure('units', 'pixels', 'position', [0 0 1920 1080]);
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ % 
-subplot(2,2,1)
+subplot(1,2,1)
 
 h2 = plot(linspace(1,12,12), horizontal, 'color', RdYlBu(10,:), 'linewidth', 2); hold on;
 % h3 = plot(linspace(1,72,72), vertical, 'color', RdYlBu(10,:), 'linewidth', 2.5); hold on;
@@ -408,14 +544,15 @@ set(gca, ...
 set(gca, 'Xtick', [1, 3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 42, 48, 54, 60, 66, 72]);
 
 h55 = legend([h1 h2 h8 h6], 'location', 'northwest', 'orientation', 'vertical', ...
-    'Change in WWV anomaly', ...
+    'Rate of change in WWV anomaly', ...
     '$\mathcal{T}_{\mathrm{5^{\circ}N + 5^{\circ}S}}$: Meridional transport', ...
     '$\mathcal{T}_{\mathrm{ITF}}$: Indonesian Throughflow', ...
     '$\mathcal{J}$: Surface volume', ...
     '$\mathcal{G_F}$: Surface forcing', ...
     '$\mathcal{G_M}$: Vertical mixing', ...
     '$\mathcal{G_I}$: Numerical mixing');
-set(h55, 'interpreter', 'latex', 'fontsize', 15.5, 'textcolor', RdYlBu(60,:));
+set(h55, 'interpreter', 'latex', 'fontsize', 15, 'textcolor', RdYlBu(60,:), ...
+    'location', 'northwest');
 
 ylim([-30 25]);
 xlim([1 12]);
@@ -435,14 +572,12 @@ text([15 15],[-5 -5],'Discharge', 'interpreter', 'latex', ...
 text(0, 31, 'a) Adiabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ % 
-subplot(2,2,2)
+subplot(1,2,2)
 
 
 h5 = plot(linspace(1,12,12), forcingc, 'color', RdYlBu(60,:), 'linewidth', 2); hold on;
 h4 = plot(linspace(1,12,12), mixingc, 'color', antarctica(15,:), 'linewidth', 2); hold on;
 h7 = plot(linspace(1,12,12), implicit, 'color', [187,0,187]/255, 'linewidth', 2); hold on;
-h8 = plot(linspace(1,12,12), forcingc+mixingc+implicit, 'color', [.45 .45 .45], 'linewidth', 2); hold on;
-
 hXLabel = xlabel('Month');
 hYLabel = ylabel(['Sv'],'interpreter','latex');    
 set([hXLabel, hYLabel], 'interpreter', 'latex', 'Fontsize', 25);
@@ -471,12 +606,12 @@ xlim([1 12]);
 pbaspect([1.5 1 1]);                        % aspect ratios: x, y, z
 clear hTitle hXLabel hYLabel h1 h2;
 
-h55 = legend([h5 h4 h7 h8], 'location', 'southwest', 'orientation', 'vertical', ...
+h55 = legend([h5 h4 h7], 'location', 'southwest', 'orientation', 'vertical', ...
     '$\mathcal{G_F}$: Surface forcing', ...
     '$\mathcal{G_M}$: Vertical mixing', ...
-    '$\mathcal{G_I}$: Numerical mixing', ...
-    'Total diabatic');
-set(h55, 'interpreter', 'latex', 'fontsize', 15.5, 'textcolor', RdYlBu(60,:));
+    '$\mathcal{G_I}$: Numerical mixing');
+set(h55, 'interpreter', 'latex', 'fontsize', 15, 'textcolor', RdYlBu(60,:), ...
+    'location', 'southwest');
 
 % draw arrows to denote El Nino and La Nina events
 arrow([13, 5], [13, 20], 'BaseAngle', 80, 'length', 15, ...
@@ -497,7 +632,7 @@ text(0, 31, 'b) Diabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
 directory = 'C:/Users/Maurice Huguenin/Desktop/';
-print('-dpng','-r300', [directory f3]);
+% print('-dpng','-r500', [directory f3]);
 
 % 
 

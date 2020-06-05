@@ -5,16 +5,16 @@
 for s = 1
     if s == 1
            period = 'EN'
-    baseD = 'G:/Maurice_ENSO_Data/pnEXP1_composite_nino_windstress/'; %Data Directory.
-    outD = 'G:/Maurice_ENSO_Data/equatorial_slices_pnEXP1/'; %Data Directory.
+    baseD = 'H:/Maurice_ENSO_Data/pnEXP1_composite_nino_windstress/'; %Data Directory.
+    outD = 'H:/Maurice_ENSO_Data/equatorial_slices_pnEXP1/'; %Data Directory.
     elseif s == 2
            period = 'LN'
-    baseD = 'G:/Maurice_ENSO_Data/pnEXP2_composite_nina_windstress/'; %Data Directory.
-    outD = 'G:/Maurice_ENSO_Data/equatorial_slices_pnEXP2/'; %Data Directory.
+    baseD = 'H:/Maurice_ENSO_Data/pnEXP2_composite_nina_windstress/'; %Data Directory.
+    outD = 'H:/Maurice_ENSO_Data/equatorial_slices_pnEXP2/'; %Data Directory.
     elseif s == 3
         period = '1996-2001'
-    baseD = 'G:/Maurice_ENSO_Data/pEXP9601_real_windstress/'; %Data Directory.
-    outD = 'FG/Maurice_ENSO_Data/equatorial_slices_1996-2001/'; %Data Directory.
+    baseD = 'H:/Maurice_ENSO_Data/pEXP9601_real_windstress/'; %Data Directory.
+    outD = 'H:/Maurice_ENSO_Data/equatorial_slices_1996-2001/'; %Data Directory.
     end
     
     
@@ -90,37 +90,37 @@ end
 %% Plot Equatorial Slices:
 
 
-for s = 3
+for s = 5
 if s == 1
            WMT = 'vertical_mixing'
            period = 'EN'
-           base = 'G:\Maurice_ENSO_Data\equatorial_slices_pnEXP1/';
+           base = 'H:\Maurice_ENSO_Data\equatorial_slices_pnEXP1/';
     elseif s == 2
            WMT = 'vertical_mixing'
            period = 'LN'
-           base = 'G:\Maurice_ENSO_Data\equatorial_slices_pnEXP2/';
+           base = 'H:\Maurice_ENSO_Data\equatorial_slices_pnEXP2/';
     elseif s == 3
            WMT = 'surface_forcing'
            period = 'EN'
-           base = 'G:\Maurice_ENSO_Data\equatorial_slices_pnEXP1/';
+           base = 'H:\Maurice_ENSO_Data\equatorial_slices_pnEXP1/';
     elseif s == 4
            WMT = 'surface_forcing'
            period = 'LN'
-           base = 'G:\Maurice_ENSO_Data\equatorial_slices_pnEXP2/';
+           base = 'H:\Maurice_ENSO_Data\equatorial_slices_pnEXP2/';
     elseif s == 5
            WMT = 'vertical_mixing'
            period = 'CM'
-           base = 'G:\Maurice_ENSO_Data\equatorial_slices_EXP0_control_run/';      
+           base = 'H:\Maurice_ENSO_Data\equatorial_slices_EXP0_control_run/';      
     elseif s == 6
            WMT = 'surface_forcing'
            period = 'CF'
-           base = 'G:\Maurice_ENSO_Data\equatorial_slices_EXP0_control_run/'; 
+           base = 'H:\Maurice_ENSO_Data\equatorial_slices_EXP0_control_run/'; 
     end
    
 if s == 1 | s == 3
     first = 'pnEXP1_composite_nino_windstress';
     % load in potential temperature
-    p1 = ['G:/Maurice_ENSO_Data/' first '/output000/'];
+    p1 = ['H:/Maurice_ENSO_Data/' first '/output000/'];
 
     % loading in warm water volume, i.e. volume of water above 20 degrees C in 
     % the Pacific region, same as McGregor et al., 2014
@@ -132,7 +132,7 @@ if s == 1 | s == 3
 elseif s == 2 | s == 4
     first = 'pnEXP2_composite_nina_windstress';
         % load in potential temperature
-    p1 = ['G:/Maurice_ENSO_Data/' first '/output000/'];
+    p1 = ['H:/Maurice_ENSO_Data/' first '/output000/'];
 
     % loading in warm water volume, i.e. volume of water above 20 degrees C in 
     % the Pacific region, same as McGregor et al., 2014
@@ -143,7 +143,7 @@ elseif s == 2 | s == 4
 end
 
 if s == 5 | s == 6
-    pc = 'F:/Maurice_ENSO_Data/EXP0_control_run/';
+    pc = 'H:/Maurice_ENSO_Data/EXP0_control_run/';
     % loading in climatology
     thetaoc = squeeze(permute(getnc([pc 'ocean_snap_clim.nc'], 'temp', ...
              [1,1,478,91], [12,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
@@ -211,10 +211,10 @@ sp = 0.1*1e-5*86400;
 doWMT = 1;
 
 if s == 5 | s == 6
-months = {[1:12],[3],[7],[11], [1:12], [1:12]}; % here he specifies the different subplots
+months = {[1:12],[1:12],[9:11],[9:11], [1:12], [1:12]}; % here he specifies the different subplots
                                 % i.e. for annual mean, month 3, 7 and 11
 else
-    months = {[9:11],[1:12],[9:11],[1:12], [1:12], [1:12]}; % here he specifies the different subplots
+months = {[1:12],[1:12],[9:11],[9:11], [1:12], [1:12]}; % here he specifies the different subplots
                                 % i.e. for annual mean, month 3, 7 and 11
 end
 monthsu01 = {[1:4],[3],[7],[11]};
@@ -245,7 +245,7 @@ hold on;
 Ztemp = Zt;
 Ztemp(596:597,5:50) = nan;
 
-% srv = 'F:/Maurice_ENSO_Data/'
+% srv = 'H:/Maurice_ENSO_Data/'
 % load([srv 'workspace_EXP1_analysis_composite_ninos_rev3.mat'], 'lon', 'lev_bnds');
 % lon = lon(91:811,478:518);
 % [Xt,Zt] = ndgrid(lon(:,1),lev_bnds);
@@ -389,7 +389,7 @@ set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
 directory = 'C:/Users/Maurice Huguenin/Desktop/';
 f3 = 'EXP1_and_EXP2_equatorial_slices';
 print('-dpng','-r100', [directory f3 '_' WMT '_' period]);
-boom
+% boom
 end
 
 

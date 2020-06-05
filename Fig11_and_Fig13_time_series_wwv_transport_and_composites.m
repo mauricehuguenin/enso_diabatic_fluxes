@@ -978,13 +978,15 @@ print('-dpng','-r300', [directory 'WMT_time_series_1979-2016']);
 %% ~~~~~~~~~~~~~~~ plotting  routine for composite figure ~~~~~~~~~~~~~~~ %% 
 clear; clc;
 directory = '/home/z5180028/MSC_thesis/access_figures/';
-load([directory 'WMT_time_series_1979-2016.mat']);
+f1 = 'E:/2017 Herbstsemester/Application Paper/AMS LaTeX Package v4.3.2_2020/';
+f2 = 'matlab_scripts_and_powerpoint_to_create_figures/';
+load([f1 f2 'WMT_time_series_1979-2016.mat']);
 
 % combining neutral diffusion and skew diffusion into one term
 eddy_mixingaf = neutralaf + skewaf; clear neutralaf skewaf;
 
 
-load('/home/z5180028/MSC_thesis/access_matlab_scripts/workspace_regression_patterns_PC1_equal_nino34_rev2.mat', 'PC1');
+load([f1 f2 'workspace_regression_patterns_PC1_equal_nino34_rev2.mat'], 'PC1');
 nino = PC1; clear PC1;
 
 
@@ -1090,12 +1092,12 @@ for e = [1,3,5]         % loop through the three events EN82/83,
     
     % add legend
     h55 = legend([h11 h22 h88 h66], ...
-        'Change in WWV anomaly', ...
+        'Rate of change in WWV anomaly', ...
         '$\mathcal{T}_{5^{\circ}\mathrm{N}+5^{\circ}\mathrm{S}}$: Meridional transport', ...
         '$\mathcal{T}_{ITF}$: Indonesian Throughflow', ...
         '$\mathcal{J}$: Surface volume', ...
         'location', 'northeast', 'orientation', 'vertical');
-    set(h55, 'interpreter', 'latex', 'fontsize', 11, 'Edgecolor', [.83 .83 .83]);
+    set(h55, 'interpreter', 'latex', 'fontsize', 18, 'Edgecolor', [.83 .83 .83]);
 
     % for the other three subplots I use the same procedure, i.e.
     % copy-paste the code while changing the time series
@@ -1226,14 +1228,14 @@ for e = [1,3,5]         % loop through the three events EN82/83,
         '$\mathcal{G_E}$: Eddy mixing', ...
         '$\mathcal{G_I}$: Numerical mixing', ...
         'location', 'northeast', 'orientation', 'vertical');
-    set(h55, 'interpreter', 'latex', 'fontsize', 11, 'Edgecolor', [.83 .83 .83]);
+    set(h55, 'interpreter', 'latex', 'fontsize', 18, 'Edgecolor', [.83 .83 .83]);
 
 end
 
 % printing figure
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
-directory = '/home/z5180028/MSC_thesis/access_figures/';
+directory = 'C:/Users/Maurice Huguenin/Desktop/';
 print('-dpng','-r300', [directory 'WMT_composite_mean_1979-2016']);
 
 

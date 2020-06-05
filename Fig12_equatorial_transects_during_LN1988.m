@@ -1,80 +1,9 @@
-%% This script extracts an equatorial slice in the Pacific of data
-%% from MOM025 runs
-model = 'ACCESS-OM2';
-baseD = '/srv/ccrc/data67/z5180028/MSC_thesis_access_output/';
-outD = '/srv/ccrc/data67/z5180028/MSC_thesis_access_output/equatorial_slices/';
-
-for output=29:30
-tic; % start stop watch
-
-base = [baseD sprintf('output%03d/ocean/',output)];
-hname = [base 'ocean_heat.nc'];
-if (strfind(baseD,'01'))
-    fname = [base 'ocean_month.nc'];
-    m3name = [base 'ocean.nc'];
-else
-    fname = [base 'ocean.nc'];
-end
-gname = [base 'ocean_grid.nc'];
-sname = [base 'ocean_snap.nc'];
-wname = [base 'ocean_wmass.nc'];
-         
-lon = ncread(gname,'geolon_t');lat = ncread(gname,'geolat_t');
-area = ncread(gname,'area_t');[xL,yL] = size(lon);
-lonu = ncread(gname,'geolon_c');latu = ncread(gname,'geolat_c');
-
-z = ncread(sname,'st_ocean');zL = length(z);
-
-time = ncread(wname,'time');
-tL = length(time);
-
-Cp = 3992.1; % J kg-1 degC-1
-rho0 = 1035; % kgm-3
-
-T = ncread(wname,'neutral');
-Te = ncread(wname,'neutralrho_edges');
-TL = length(T);dT = T(2)-T(1);
-
-%% Get equatorial slices of variables:
-latsl = 0;
-[tmp ltind] = min(abs(lat(1,:)-latsl));
-[tmp ln1] = min(abs(lon(:,ltind)+240));
-[tmp ln2] = min(abs(lon(:,ltind)+70));
-
-% prepare variables and only select equatorial transects
-temp = squeeze(ncread(fname,'temp',[ln1 ltind 1 1],[ln2-ln1+1 1 zL tL]));
-u = squeeze(ncread(fname,'u',[ln1 ltind 1 1],[ln2-ln1+1 1 zL tL]));
-v = squeeze(ncread(fname,'v',[ln1 ltind 1 1],[ln2-ln1+1 1 zL tL]));
-kappa = squeeze(ncread(fname,'diff_cbt_t',[ln1 ltind 1 1],[ln2-ln1+1 1 zL tL]));
-taux = squeeze(ncread(fname,'tau_x',[ln1 ltind 1],[ln2-ln1+1 1 tL]));
-tauy = squeeze(ncread(fname,'tau_y',[ln1 ltind 1],[ln2-ln1+1 1 tL]));
-mld = squeeze(ncread(fname,'mld',[ln1 ltind 1],[ln2-ln1+1 1 tL]));
-vdif = squeeze(ncread(wname,'temp_vdiffuse_diff_cbt_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]));
-vnlc = squeeze(ncread(wname,'temp_nonlocal_KPP_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]));
-pmer = squeeze(ncread(wname,'sfc_hflux_pme_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]) + ...
-               ncread(wname,'temp_rivermix_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]));
-sufc = squeeze(ncread(wname,'temp_vdiffuse_sbc_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]) + ...
-               ncread(wname,'frazil_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]) + ...
-               ncread(wname,'temp_eta_smooth_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]) + ...
-               ncread(wname,'sw_heat_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]));
-swrd = squeeze(ncread(wname,'sw_heat_on_nrho',[ln1 ltind 1 1],[ln2-ln1+1 1 TL tL]));
-
-[Xt,Zt] = ndgrid(lon(ln1:ln2,ltind),z);
-[Xu,Zu] = ndgrid(lonu(ln1:ln2,ltind),z);
-
-name = [outD model sprintf('_output%03d',output) '_varsat_Eq.mat']
-save(name,'Xt','Zt','Xu','Zu','temp','u','v','kappa','taux','tauy','mld', ...
-     'vdif','vnlc','pmer','sufc','swrd', 'T');
-toc;
-end
-
-clear;
 
 %% Plot Equatorial Slices:
 tic;
 WMT = 'vertical_mixing'
 period = 'LN'
-base = '/srv/ccrc/data67/z5180028/MSC_thesis_access_output/equatorial_slices/';
+base = 'H:/Maurice_ENSO_Data/equatorial_slices_EXP1979-2016/';
 
 % Load Base Variables:
 model = 'ACCESS-OM2';
@@ -168,13 +97,17 @@ hold on;
 Ztemp = Zt;
 Ztemp(596:597,5:50) = nan;
 [c,h] = contour(Xt,-Ztemp,nanmonmean(temp(:,:,months{i}),3,ndays(months{i})),[0:1:35],'-k');
-clabel(c,h,[0:3:35], 'interpreter', 'latex', 'fontsize', 12);
 % plot 20 degree isotherm bold
 [c1,h1] = contour(Xt,-Zt,nanmonmean(temp(:,:,months{i}),3,ndays(months{i})),[20 20], 'color', [1 1 1],'linewidth',4.5); hold on;
 [c2,h2] = contour(Xt,-Zt,nanmonmean(temp(:,:,months{i}),3,ndays(months{i})),[20 20],'-k','linewidth',3);
 
+
+clabel(c,h,[12,15,23,25,27], 'interpreter', 'latex', 'fontsize', 20, 'color', 'g'); hold on;
+clabel(c,h,[12,15,23,25,27], 'interpreter', 'latex', 'fontsize', 16, 'color', 'k');
+
+
 % plotting contour of mixed layer depth (mld)
-if (strcmp(model,'ACCESS-OM2'))
+if (strcmp(model,'MOM01'))
     mnu = monthsu01{i};
 else
     mnu = months{i};
@@ -184,22 +117,24 @@ end
 %                 'color',ucol);
 % [c,h] = contour(Xu,-Zu,mean(u(:,:,mnu),3),[0.2:0.2:2],'-', ...
 %                 'color',ucol);
+
+% plot the mixed layer depth as a dashed line
 plot(Xu(:,1),-monmean(mld(:,months{i}),2,ndays(months{i})),'--','color',RdYlBu(50,:),'linewidth',3);
-% $$$ clabel(c,h,'color','w');
+% clabel(c,h,'color','w');
 ylim([-300 0]);
 xlim([-220 -80]);
 cb = colorbar('color', [.1922 .2118 .5843], 'box', 'on', ...
-    'tickdirection', 'in', 'ticklabelinterpreter', 'latex', 'Fontsize', 16);
+    'tickdirection', 'in', 'ticklabelinterpreter', 'latex', 'Fontsize', 17);
 limits = [-1.5 1.5];
 set(cb, 'YTick', linspace(limits(1), limits(2),5));
 
 if (doWMT)
-    ylabel(cb,'[m day$^{-1}$]','interpreter', 'latex', 'FontSize', 16);
+    ylabel(cb,'[m day$^{-1}$]','interpreter', 'latex', 'FontSize', 17);
 else
-    ylabel(cb,'Wm$^{-2}$','interpreter', 'latex', 'FontSize', 16);
+    ylabel(cb,'Wm$^{-2}$','interpreter', 'latex', 'FontSize', 17);
 end
-xlabel('Longitude','interpreter', 'latex', 'FontSize', 16);
-ylabel('Depth [m]','interpreter', 'latex', 'FontSize', 16);
+xlabel('Longitude','interpreter', 'latex', 'FontSize', 17);
+ylabel('Depth [m]','interpreter', 'latex', 'FontSize', 17);
 caxis(clim);
 % text(-218,-288,labels{i},'Backgroundcolor','w','FontSize',25);
 
@@ -207,55 +142,46 @@ caxis(clim);
 colormap(cmap);
 set(gca, 'clim', [limits(1) limits(2)]); hold on;
 
-set(gca,'XTickLabel',{'','$160^{\circ}$E','',...
-    '$160^{\circ}$E','','$120^{\circ}$W', '', ...
-    '$80^{\circ}$W'},'ticklabelinterpreter', 'latex', 'FontSize', 16);
+set(gca,'XTickLabel',{'','$160^{\circ}$E','','$160^{\circ}$W','', ...
+                         '$120^{\circ}$W', '', '$80^{\circ}$W'}, ...
+                         'ticklabelinterpreter', 'latex', 'FontSize', 16);
 
 set(gca, ...
   'XColor'          , [.1922 .2118 .5843]  , ...
   'YColor'          , [.1922 .2118 .5843]);
 set(gca,'layer','top'); % bring grid to the top layer
-set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 14);
+set(gca, 'ticklabelinterpreter', 'latex', 'fontsize', 17);
 
-% adding labels for each subplot, grey shading for those subplots I do not
-% need
+
 if i == 1                 
       text(-240, 32, 'a) July 1988', 'interpreter', 'latex', 'Fontsize', 23, ...
     'color', [0 0 0]);
 elseif i == 2 
-    text(-240, 32, 'b) ', 'interpreter', 'latex', 'Fontsize', 23, ...
-    'color', [0 0 0]);
 h5 = patch([200 -500 -500 200], [0, 0, -300, -300], ...
     [0.8875 0.8875 0.8875], 'edgecolor', 'none', 'facealpha', 1); hold on;
 elseif i == 3 
       text(-240, 31, 'b) December 1988', 'interpreter', 'latex', 'Fontsize', 23, ...
     'color', [0 0 0]);
 elseif i == 4 
-      text(-240, 31, 'd) ', 'interpreter', 'latex', 'Fontsize', 23, ...
-    'color', [0 0 0]);
 h5 = patch([200 -500 -500 200], [0, 0, -300, -300], ...
     [0.8875 0.8875 0.8875], 'edgecolor', 'none', 'facealpha', 1); hold on;
-elseif i == 5 
-      text(-240, 31, 'c) May 1989', 'interpreter', 'latex', 'Fontsize', 23, ...
+elseif i == 5
+text(-240, 31, 'c) May 1989', 'interpreter', 'latex', 'Fontsize', 23, ...
     'color', [0 0 0]);
-% h5 = patch([200 -500 -500 200], [0, 0, -300, -300], ...
-%     [0.8875 0.8875 0.8875], 'edgecolor', 'none', 'facealpha', 1); hold on;
 elseif i == 6 
-      text(-240, 31, 'f)', 'interpreter', 'latex', 'Fontsize', 23, ...
-    'color', [0 0 0]);
 h5 = patch([200 -500 -500 200], [0, 0, -300, -300], ...
     [0.8875 0.8875 0.8875], 'edgecolor', 'none', 'facealpha', 1); hold on;
 end
 end
+
 
 
 % finished fancy plot
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
-directory = '/home/z5180028/MSC_thesis/access_figures/';
-print('-dpng','-r300', [directory 'Equatorial_transect_vertical_mixing_LN_' ...
+directory = 'C:/Users/Maurice Huguenin/Desktop/';
+print('-dpng','-r500', [directory 'Equatorial_transect_vertical_mixing_LN_' ...
     'output0' num2str(outputs)]);
-
 toc;
 
 
