@@ -31,7 +31,7 @@ __Fig. 1__: Visualize data from the regression analysis ([EOF_based_regression_a
 
 __Fig. 2__: Import data from data/workspace_regression_patterns_PC1_equal_nino34_rev2.mat and workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat for visualization in [Fig2_idealized_symmetric_timeseries.m](Fig2_idealized_symmetric_timeseries.m)
 
-__Fig. 3__: Using [Fig3_timeseries_nino34_and_wwv_and_taux_and_nsfc.m](Fig3_timeseries_nino34_and_wwv_and_taux_and_nsfc.m) to plot climate indices
+__Fig. 3__: Using [Fig3_timeseries_nino34_and_wwv_and_taux_and_nsfc.m](Fig3_timeseries_nino34_and_wwv_and_taux_and_nsfc.m) to plot climate indices, new calculations for the upper ocean 0-2000 m heat calculations are imported from 
 
 __Fig. 4 & 7__: Creating equatorial transects of vertical mixing/surface forcing with [Fig4_and_Fig7_equatorial_transects_climatology](Fig4_and_Fig7_equatorial_transects_climatology). The first part extracts the data first and saves it in a .mat file while the second part describes the plotting routine. The .mat workspaces are located in data/equatorial_transect_workspace/.. The file nanmonmean.m is used to calculate monthly mean values for the transects.
 
@@ -56,7 +56,7 @@ __Fig. 12__: Creating equatorial transects as in Fig. 4 and Fig. 7 with [Fig12_e
 __Fig. 13__: Create composite time series of the three strong El Niño and La Niña events using the WWV budget time series from Fig. 12 and the script [Fig11_and_Fig13_time_series_wwv_transport.m](Fig11_and_Fig13_time_series_wwv_transport.m)
 
 
-__Fig. 14__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python ([Fig14_visualizing_script_barplot.py](Fig14_visualizing_script_barplot.py)) and then add the individual bar plots together in [Fig14_barplot_wwv_contributing_terms.pptx](Fig15_barplot_wwv_contributing_terms.pptx). Fig14_visualizing_script_barplot.py acts as an example, the scripts for the five other events are, except for the hard-coded data, identical. I choose this approach with a separate script for each event as it was the fastest that worked the first time.
+__Fig. 14__: First I visualize as a bar plot the values saved in data/WMT_time_series_1979-2016.mat with python ([Fig14_visualizing_script_barplot.py](Fig14_visualizing_script_barplot.py) and then add the individual bar plots together in [Fig14_barplot_wwv_contributing_terms.pptx](Fig15_barplot_wwv_contributing_terms.pptx). Fig14_visualizing_script_barplot.py acts as an example, the scripts for the five other events are, except for the hard-coded data, identical. I choose this approach with a separate script for each event as it was the fastest that worked the first time.
 
 __Fig. A1__: Visualize regression patterns from the plotting_all_PC1_and_PC2_patterns_rev1.mat workspace with [FigA1_anomaly_fields_ENSO_regression](FigA1_anomaly_fields_ENSO_regression)
 
@@ -73,15 +73,8 @@ __Fig. A1__: Visualize regression patterns from the plotting_all_PC1_and_PC2_pat
 - __plotting_all_PC1_and_PC2_patterns_rev1.mat__: data for all spatial regression patterns
 - __workspace_EXP1_and_EXP2_polynomial_PC_composites_symmetric.mat__: saved variables for Fig. 3
 - __workspace_regression_patterns_PC1_equal_nino34_rev2.mat__: data for the spatial patterns and time series for Fig. 1
-
-
-
-
-
-
-
-
-
+- __OHC_clim_2000.mat__ global uper 0-2000 m climatological ocean heat content time series used for Fig. 3.
+- __OHC_pnEXP1_and_pnEXP2_2000.mat__ global uper 0-2000 m ocean heat content time series from the idealised simulations used for Fig. 3.
 
 
 # Model output data

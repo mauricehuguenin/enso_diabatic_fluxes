@@ -1,19 +1,16 @@
-%% Calculating the Warm Water Volume Budget for the idealized El Nino
-% and La Nina events
+%% EXP1: Plotting latitude integrated OHCa during December of the first year
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  %
+%                                                                         %
 %                     hmaurice, 23.11.2017, 10:19 AEST                    %
+%                                                                         %
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  %
 
 
-% run the script twice before plotting, comment out each of the lines 
-% below here to get time series associated with El Nino and La Nina 
-% output
-%                          first = 'pnEXP1_composite_nino_windstress';   
-                         first = 'pnEXP2_composite_nina_windstress'; 
 
+                         first = 'pnEXP1_composite_nino_windstress';   
+%                          first = 'pnEXP2_composite_nina_windstress'; 
 
-% custom colour bar
 antarctica =    [150,   0,  17; 165,   0,  33; 200,   0,  40; ...
                  216,  21,  47; 247,  39,  53; 255,  61,  61; ...
                  255, 120,  86; 255, 172, 117; 255, 214, 153; ...
@@ -22,12 +19,12 @@ antarctica =    [150,   0,  17; 165,   0,  33; 200,   0,  40; ...
                   61, 135, 255;  40,  87, 255;  24,  28, 247; ...
                   30,   0, 230;  36,   0, 216;  45,   0, 200]*1./255;
 
-              
-%% load workspace and colour definition
+%% load in workspace
+% load workspace
 f1 = 'pnEXP1_and_pnEXP2_timeseries_wwv_transport_20S_20N';
 f2 = 'pnEXP1_and_pnEXP2_timeseries_wwv_transport_8S_8N';
 f3 = 'timeseries_wwv_transport_5S_5N';
-srv = 'G:\Maurice_ENSO_Data\'
+srv = 'H:\Maurice_ENSO_Data\'
 load('E:\2017 Frühlingssemester\Master Seminar 1\workspace_EXP1_analysis_composite_ninos_rev3.mat');
 antarctica = nature;
 RdBu_short  = cbrewer('div', 'RdBu', 21, 'PCHIP');
@@ -35,9 +32,12 @@ RdYlGn  = cbrewer('div', 'RdYlGn', 60, 'PCHIP');
 Reds  = cbrewer('seq', 'Reds', 16, 'PCHIP');
 Blues  = cbrewer('seq', 'Blues', 16, 'PCHIP');
 
-% WWV mask = the region over which we calculate the budget
-% we use wwv_mask_2S_borneo which is 5°N-5°S over the Pacific with 
-% the ITF between Borneo and New Guinea at 2°S
+% prepare mask                  % importante!       % wwv region 20S - 20N
+                                % wwv_mask(117:840, 417:580) = 20S - 20N
+                                % wwv_mask(117:840, 466:531) = 8S - 8N
+                                % wwv_mask(117:840, 478:518) = 5S - 5N
+
+
 wwv_mask = wwv_mask(91:811,478:518);
 wwv_mask_2S = wwv_mask_2S(91:811,478:518);
 wwv_mask_2S_borneo = wwv_mask_2S_borneo(91:811,478:518);
@@ -45,10 +45,25 @@ lon = lon(91:811,478:518);
 lat = lat(91:811,478:518);
 testmap(lon, lat, wwv_mask_2S_borneo);
 
-srv = 'G:\Maurice_ENSO_Data\'
-
+srv = 'H:\Maurice_ENSO_Data\'
 
 %% preamble and data preparation for warm water volume
+
+                                % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+                                % location_tahiti        = [523, 427] %
+                                % location_center_nino34 = [540, 498] %
+                                % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+
+                                
+                                
+            % importante!       % wwv region 20S - 20N
+                                % wwv_mask(117:840, 417:580) = 20S - 20N
+                                % wwv_mask(117:840, 466:531) = 8S - 8N
+                                
+                                
+                             
+             
+                             
 
 restart = 'restart000';
 string = [first '_restart000'];
@@ -69,20 +84,26 @@ neutral_rho = getnc([p1 'ocean_wmass.nc'], 'neutral'); % temperature space array
 thetao_1 = squeeze(permute(getnc([p1 'ocean_snap.nc'], 'temp', ...
          [1,1,478,91], [12,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
          % [month, depth, lat, lon], [end], [stride]
-         % permute so my dimensions change to [lon, lat, depth, time]
-         % which is more intuitive
 thetao_2 = squeeze(permute(getnc([p2 'ocean_snap.nc'], 'temp', ...
          [1,1,478,91], [12,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
-     
-% concatenate across the 4th dimension, i.e. time
-% thetao(lon, lat, temp, time)
 thetao = cat(4, thetao_1, thetao_2); 
 clear thetao_1 thetao_2 thetao_3 thetao_4 thetao_5 thetao_6;
+
+% so_1 = squeeze(permute(getnc([p1 'ocean.nc'], 'salt', ...
+%          [1,1,478,91], [12,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
+% so_2 = squeeze(permute(getnc([p2 'ocean.nc'], 'salt', ...
+%          [1,1,478,91], [12,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
+% so = cat(4, so_1, so_2); 
+% clear so_1 so_2 so_3 so_4 so_5 so_6;
 
 % loading in climatology
 thetaoc = squeeze(permute(getnc([pc 'ocean_snap_clim.nc'], 'temp', ...
          [1,1,478,91], [12,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
 thetaoc = cat(4, thetaoc, thetaoc);
+
+% soc = squeeze(permute(getnc([pc 'ocean_clim.nc'], 'salt', ...
+%          [1,1,478,91], [12,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
+% soc = cat(4, soc, soc);
 
 cto = thetao; 
 ctoc = thetaoc;
@@ -121,16 +142,19 @@ for z = 1:50
 end
 
 size(volume)
+% s = nansum(reshape(volume, [640*41*50 48]));
+% t = nansum(reshape(volumec, [640*41*50 48]));
+
 wwv = squeeze(nansum(squeeze(nansum(squeeze(nansum(volume-volumec, 1)), 1)), 1));
 % 
 plot(wwv); hold on;
 toc;
 
-
 %% calculating the derivative of wwv
 % this is a bit tricky since I have monthly mean output and the derivative
 % only gives 11 values
 % the 12th value for dV/dt is from the restart file
+
 
 p1_new = p1(1:end-10);
 temp_res = squeeze(permute(getnc([p1(1:end-10) 'restart000/ocean_temp_salt.res.nc'], 'temp', ...
@@ -150,10 +174,10 @@ temp_resc5 = squeeze(permute(getnc([pc 'restart004/ocean_temp_salt.res.nc'], 'te
          [1,1,478,91], [-1,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
 temp_resc6 = squeeze(permute(getnc([pc 'restart004/ocean_temp_salt.res.nc'], 'temp', ...
          [1,1,478,91], [-1,-1,518,811], [1,1,1,1]), [4 3 2 1])); 
-% concatenate across the fourth dimension
 temp_resc = squeeze(nanmean(cat(4, temp_resc1, temp_resc2, temp_resc3, temp_resc4, temp_resc5), 4)); 
 clear temp_resc1 temp_resc2 temp_resc3 temp_resc4 temp_resc5 temp_resc6;
      
+
 
 % now finding temperature within it which is higher than 20 degrees
 maskr = temp_res;
@@ -185,6 +209,13 @@ dV(1) = dV(1) / (30*24*60*60) / 1e6; % nochmals durch 1 Million um schÃ¶n in Sve
 plot(dV); hold on;
 
 
+
+
+
+% size(temp_res)
+% dV(1) = squeeze(nansum(squeeze(nansum(squeeze(nansum(temp_res, 1)), 1)), 2));
+
+
 % taking derivative and converting to Sverdrup
 % dV/dt = (wwv_i - wwv_i-1)/dt
 delta_t = 30*24*60*60;
@@ -202,10 +233,9 @@ clear ans bathymetry cto ctoc dzt dztc maskc s so soc;
 clear t test thetao thetaoc volcello z;
 clear volume volume_res volumec volumec_res temp_res temp_resc;
 
-
 %% calculating the horizontal transport and vertical transport as residual
 
-% load in meridional transport
+
 ty_trans_nrho_1 = squeeze(nansum(permute(getnc([p1 'ocean.nc'], 'ty_trans_nrho', ...
          [1,46,478,91], [12,74,518,811], [1,1,1,1]), [4 3 2 1]), 3)); 
 ty_trans_nrho_2 = squeeze(nansum(permute(getnc([p2 'ocean.nc'], 'ty_trans_nrho', ...
@@ -221,6 +251,7 @@ ty_transc = cat(3, ty_transc, ty_transc);
 size(ty_trans)
 
 % calculating the transport across the different transects
+
 for i = 1:721           % transect to the north, +5 degrees
     north(i,:) = squeeze(ty_trans(i,41,:)) .* wwv_mask_2S_borneo(i,41);
     northc(i,:) = squeeze(ty_transc(i,41,:)) .* wwv_mask_2S_borneo(i,41);
@@ -234,7 +265,6 @@ for i =  1:721           % transect to the south, -5 degrees
     southc(i,:) = squeeze(-ty_transc(i,1,:)) .* wwv_mask_2S_borneo(i,1);
 end
 
-% take sums over dimensions to get time series
 north = nansum(north); northc = nansum(northc);
 south = nansum(south); southc = nansum(southc);
 ITF = nansum(ITF); ITFc = nansum(ITFc);
@@ -274,7 +304,6 @@ plot(horizontal); hold on; plot(ITFa, 'color', 'g'); hold on; plot(vertical); ho
 
 % safespot: 08. 03. 2018, 16:16
 
-
 %% creating budget with water mass transformation framework 
 
 % defining constants
@@ -283,8 +312,7 @@ cp = 3992.1;         % specific heat capacity of seawater [J kg^-1 K^-1]
 dT = 0.5;           % the temperature difference of the binned temperature 
 
 
-                % ~~~~~~~~~~~~~~~~~ GM ~~~~~~~~~~~~~~~~~ %   
-% load in diagnostics in temperature space for vertical mixing
+                % ~~~~~~~~~~~~~~~~~ GM ~~~~~~~~~~~~~~~~~ %                
 cbt1 = squeeze(permute(getnc([p1 'ocean_wmass.nc'], 'temp_vdiffuse_diff_cbt_on_nrho', ...
          [1,46,478,91], [12,46,518,811], [1,1,1,1]), [4 3 2 1])); 
 cbt2 = squeeze(permute(getnc([p2 'ocean_wmass.nc'], 'temp_vdiffuse_diff_cbt_on_nrho', ...
@@ -490,7 +518,6 @@ forcinga(25:72) = 0;
 massa(25:72) = 0;
 implicit(25:72) = 0;
 
-
 %% save variables for plotting routine later
 if first == 'pnEXP1_composite_nino_windstress'
     horizontal_EXP1 = horizontal;
@@ -512,10 +539,7 @@ end
 
 clear horizontal ITFa dV massa forcinga mixinga implicit;
 
-
-%% preparing data for table with percentages 
-% -> this data is later used in Fig. 9 & Fig. 15 
-
+%% preparing data for table with percentages
 
 if first == 'pnEXP1_composite_nino_windstress'
                  d = [7:21];            % discharge phase
@@ -540,9 +564,19 @@ table_discharge(5) = nansum(forcinga_EXP1(d) .* time);
 table_discharge(6) = nansum(mixinga_EXP1(d) .* time);
 table_discharge(7) = nansum(implicit_EXP1(d) .* time);
 
+% table_recharge = nan(7,2);
+% table_recharge(1) = nansum(dV(r) .* time);
+% table_recharge(2) = nansum(horizontal(r) .* time);
+% table_recharge(3) = nansum(ITFa(r) .* time);
+% 
+% table_recharge(4) = nansum(forcinga(r) .* time);
+% table_recharge(5) = nansum(mixinga(r) .* time);
+% table_recharge(6) = nansum(massa(r) .* time);
+% table_recharge(7) = nansum(implicit(r) .* time);
 
 for i = 1:7
     table_discharge(i,2) = table_discharge(i,1) ./ table_discharge(1,1) .*100;
+%     table_recharge(i,2) = table_recharge(i,1) ./ table_recharge(1,1);
 end
 
 % rounding
@@ -555,14 +589,7 @@ table_discharge(:,1) = table_discharge(:,1) * 1e6;
 table_discharge(:,1) = table_discharge(:,1) / 1e14; % nun sind es nur noch kleine zahlen
 table_discharge(:,1) = round(table_discharge(:,1),1);
 
-if first == 'pnEXP1_composite_nino_windstress';
-    table_discharge = table_discharge;
-elseif first == 'pnEXP2_composite_nina_windstress';
-    table_recharge = table_discharge;
-end
-
-open table_discharge 
-open table_recharge
+open table_discharge
 
 %% clean up  workspace before plotting again
 clear ans areacello bathymetry cto ctoc dzt dztc h7 h8 h9 lat lev_bnds lon;
@@ -591,11 +618,16 @@ xbars = [24 72];
 h44 = patch([xbars(1) xbars(1), xbars(2), xbars(2)], [-12 25 25 -12], ...
     [1 1 1], 'edgecolor', 'none'); hold on;
 
-h2 = plot(linspace(1,72,72), horizontal_EXP1, 'color', RdYlBu(10,:), 'linewidth', 2); hold on;
 h1 = plot(linspace(1,72,72), dV_EXP1, 'color', [0 0 0], 'linewidth', 2.5); hold on;
+h2 = plot(linspace(1,72,72), horizontal_EXP1, 'color', RdYlBu(10,:), 'linewidth', 2); hold on;
+% h3 = plot(linspace(1,72,72), vertical, 'color', RdYlBu(10,:), 'linewidth', 2.5); hold on;
+h1 = plot(linspace(1,72,72), dV_EXP1, 'color', [0 0 0], 'linewidth', 2.5); hold on;
+% h11 = plot(linspace(1,72,72), movmean(test,5), 'color', [0 0 0], 'linewidth', 3, 'linestyle', '--'); hold on;
 h6 = plot(linspace(1,72,72), massa_EXP1, 'color', RdYlBu(21,:), 'linewidth', 2); hold on;
 
-h1 = plot(linspace(1,72,72), dV_EXP1, 'color', [0 0 0], 'linewidth', 2.5); hold on;
+% h5 = plot(linspace(1,72,72), forcinga_EXP1, 'color', RdYlBu(60,:), 'linewidth', 2); hold on;
+% h4 = plot(linspace(1,72,72), mixinga_EXP1, 'color', antarctica(15,:), 'linewidth', 2); hold on;
+% h7 = plot(linspace(1,72,72), implicit_EXP1, 'color', [187,0,187]/255, 'linewidth', 2); hold on;
 h8 = plot(linspace(1,72,72), ITFa_EXP1, 'color', RdYlGn(60,:), 'linewidth', 2); hold on;
 
 hXLabel = xlabel('');
@@ -611,30 +643,32 @@ set(gca, ...
   'XMinorTick'      , 'off'         , ...
   'YMinorTick'      , 'off'         , ...
   'YGrid'           , 'on'          , ...
-  'YTick'           , -20:5:30   , ...     % define grid, every 1000 m a grid line
+  'YTick'           , -20:10:30   , ...     % define grid, every 1000 m a grid line
   'XColor'          , RdYlBu(60,:)  , ...
   'YColor'          , RdYlBu(60,:)  , ...
   'ticklabelinterpreter', 'latex'   , ...
   'LineWidth'       , 1.25);
 
 % text to indicate blue and red discharge/recharge phases
-text([9 9],[7 7],'discharge phase', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(1,:));
+text([7.5 7.5],[-15.5 -15.5],'discharge phase', 'interpreter', 'latex', 'fontsize', 21, 'color', RdYlBu(1,:));
  
-% add legend
+% set(gca, 'Xtick', [1, 3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 42, 48, 54, 60, 66, 72]);
+
 h55 = legend([h1 h2 h8 h6], 'location', 'northwest', 'orientation', 'vertical', ...
-    'Change in WWV anomaly', ...
+    'Rate of change in WWV anomaly', ...
     '$\mathcal{T}_{\mathrm{5^{\circ}N + 5^{\circ}S}}$: Meridional transport', ...
     '$\mathcal{T}_{\mathrm{ITF}}$: Indonesian Throughflow', ...
     '$\mathcal{J}$: Surface volume', ...
     '$\mathcal{G_F}$: Surface forcing', ...
     '$\mathcal{G_M}$: Vertical mixing', ...
     '$\mathcal{G_I}$: Numerical mixing');
-set(h55, 'interpreter', 'latex', 'fontsize', 11.8, 'textcolor', RdYlBu(60,:),'Edgecolor', [.83 .83 .83]);
+set(h55, 'interpreter', 'latex', 'fontsize', 15, 'textcolor', RdYlBu(60,:),'Edgecolor', [.83 .83 .83]);
 
-ylim([-20 27]); % add figure limits
+ylim([-20 27]);
 xlim([1 24]);
 pbaspect([1.5 1 1]);                        % aspect ratios: x, y, z
 clear hTitle hXLabel hYLabel h1 h2;
+set(gca, 'Xtick', [1, 3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 42, 48, 54, 60, 66, 72]);
 
 % draw arrows to denote El Nino and La Nina events
 arrow([26, 5], [26, 20], 'BaseAngle', 80, 'length', 15, ...
@@ -648,7 +682,7 @@ text([28 28],[-5 -5],'Discharge', 'interpreter', 'latex', ...
 
 text(-3, 31, 'a) Adiabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
-text(11, 35.3, 'El Ni\~no', 'interpreter', 'latex', 'Fontsize', 25, ...
+text(11, 34, 'El Ni\~no', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ % 
@@ -657,6 +691,7 @@ xbars = [7 21];
 h44 = patch([xbars(1) xbars(1), xbars(2), xbars(2)], [-30 30 30 -30], ...
     [Blues(10,:)], 'edgecolor', 'none', 'facealpha', 0.3); hold on;
 
+h1 = plot(linspace(1,72,72), dV_EXP2, 'color', [0 0 0], 'linewidth', 2.5); hold on;
 h2 = plot(linspace(1,72,72), horizontal_EXP2, 'color', RdYlBu(10,:), 'linewidth', 2); hold on;
 % h3 = plot(linspace(1,72,72), vertical, 'color', RdYlBu(10,:), 'linewidth', 2.5); hold on;
 h1 = plot(linspace(1,72,72), dV_EXP2, 'color', [0 0 0], 'linewidth', 2.5); hold on;
@@ -666,7 +701,6 @@ h6 = plot(linspace(1,72,72), massa_EXP2, 'color', RdYlBu(21,:), 'linewidth', 2);
 % h5 = plot(linspace(1,72,72), forcinga_EXP2, 'color', RdYlBu(60,:), 'linewidth', 2); hold on;
 % h4 = plot(linspace(1,72,72), mixinga_EXP2, 'color', antarctica(15,:), 'linewidth', 2); hold on;
 % h7 = plot(linspace(1,72,72), implicit_EXP2, 'color', [187,0,187]/255, 'linewidth', 2); hold on;
-h1 = plot(linspace(1,72,72), dV_EXP2, 'color', [0 0 0], 'linewidth', 2.5); hold on;
 h8 = plot(linspace(1,72,72), ITFa_EXP2, 'color', RdYlGn(60,:), 'linewidth', 2); hold on;
 
 hXLabel = xlabel('');
@@ -682,7 +716,7 @@ set(gca, ...
   'XMinorTick'      , 'off'         , ...
   'YMinorTick'      , 'off'         , ...
   'YGrid'           , 'on'          , ...
-  'YTick'           , -20:5:27   , ...     % define grid, every 1000 m a grid line
+  'YTick'           , -20:10:30   , ...     % define grid, every 1000 m a grid line
   'XColor'          , RdYlBu(60,:)  , ...
   'YColor'          , RdYlBu(60,:)  , ...
   'ticklabelinterpreter', 'latex'   , ...
@@ -692,7 +726,7 @@ set(gca, ...
 set(gca, 'Xtick', [1, 3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 42, 48, 54, 60, 66, 72]);
 
 % text to indicate blue and red discharge/recharge phases
-text([8 8],[22.5 22.5],'recharge phase', 'interpreter', 'latex', ...
+text([7.5 7.5],[22.5 22.5],'recharge phase', 'interpreter', 'latex', ...
     'fontsize', 21, 'color', RdYlBu(60,:));
 
 ylim([-20 27]);
@@ -712,7 +746,7 @@ text([28 28],[-5 -5],'Discharge', 'interpreter', 'latex', ...
 
 text(-3, 31, 'b) Adiabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
-text(11, 35.3, 'La Ni\~na', 'interpreter', 'latex', 'Fontsize', 25, ...
+text(11, 34, 'La Ni\~na', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ % 
@@ -725,11 +759,17 @@ xbars = [24 72];
 h44 = patch([xbars(1) xbars(1), xbars(2), xbars(2)], [-12 25 25 -12], ...
     [1 1 1], 'edgecolor', 'none'); hold on;
 
+% h2 = plot(linspace(1,72,72), horizontal_EXP1, 'color', RdYlBu(10,:), 'linewidth', 2); hold on;
+% h3 = plot(linspace(1,72,72), vertical, 'color', RdYlBu(10,:), 'linewidth', 2.5); hold on;
+% h1 = plot(linspace(1,72,72), dV_EXP1, 'color', [0 0 0], 'linewidth', 2.5); hold on;
+% h11 = plot(linspace(1,72,72), movmean(test,5), 'color', [0 0 0], 'linewidth', 3, 'linestyle', '--'); hold on;
+% h6 = plot(linspace(1,72,72), massa_EXP1, 'color', RdYlBu(21,:), 'linewidth', 2); hold on;
 
+h1 = plot(linspace(1,72,72), dV_EXP1, 'color', [0 0 0], 'linewidth', 2.5); hold on;
 h5 = plot(linspace(1,72,72), forcinga_EXP1, 'color', RdYlBu(60,:), 'linewidth', 2); hold on;
 h4 = plot(linspace(1,72,72), mixinga_EXP1, 'color', antarctica(15,:), 'linewidth', 2); hold on;
 h7 = plot(linspace(1,72,72), implicit_EXP1, 'color', [187,0,187]/255, 'linewidth', 2); hold on;
-h1 = plot(linspace(1,72,72), dV_EXP1, 'color', [0 0 0], 'linewidth', 2.5); hold on;
+% h8 = plot(linspace(1,72,72), ITFa_EXP1, 'color', RdYlGn(60,:), 'linewidth', 2); hold on;
 
 hXLabel = xlabel('Month');
 hYLabel = ylabel(['[Sv]'],'interpreter','latex');
@@ -744,7 +784,7 @@ set(gca, ...
   'XMinorTick'      , 'off'         , ...
   'YMinorTick'      , 'off'         , ...
   'YGrid'           , 'on'          , ...
-  'YTick'           , -20:5:30   , ...     % define grid, every 1000 m a grid line
+  'YTick'           , -20:10:30   , ...     % define grid, every 1000 m a grid line
   'XColor'          , RdYlBu(60,:)  , ...
   'YColor'          , RdYlBu(60,:)  , ...
   'ticklabelinterpreter', 'latex'   , ...
@@ -756,7 +796,7 @@ h55 = legend([h5 h4 h7], 'location', 'northwest', 'orientation', 'vertical', ...
     '$\mathcal{G_F}$: Surface forcing', ...
     '$\mathcal{G_M}$: Vertical mixing', ...
     '$\mathcal{G_I}$: Numerical mixing');
-set(h55, 'interpreter', 'latex', 'fontsize', 11.8, 'textcolor', RdYlBu(60,:), 'Edgecolor', [.83 .83 .83]);
+set(h55, 'interpreter', 'latex', 'fontsize', 15, 'textcolor', RdYlBu(60,:), 'Edgecolor', [.83 .83 .83]);
 
 ylim([-20 27]);
 xlim([1 24]);
@@ -782,12 +822,16 @@ xbars = [7 21];
 h44 = patch([xbars(1) xbars(1), xbars(2), xbars(2)], [-30 30 30 -30], ...
     [Blues(10,:)], 'edgecolor', 'none', 'facealpha', 0.3); hold on;
 
+% h2 = plot(linspace(1,72,72), horizontal_EXP2, 'color', RdYlBu(10,:), 'linewidth', 2); hold on;
+% h3 = plot(linspace(1,72,72), vertical, 'color', RdYlBu(10,:), 'linewidth', 2.5); hold on;
 h1 = plot(linspace(1,72,72), dV_EXP2, 'color', [0 0 0], 'linewidth', 2.5); hold on;
+% h11 = plot(linspace(1,72,72), movmean(test,5), 'color', [0 0 0], 'linewidth', 3, 'linestyle', '--'); hold on;
+% h6 = plot(linspace(1,72,72), massa_EXP2, 'color', RdYlBu(21,:), 'linewidth', 2); hold on;
 
 h5 = plot(linspace(1,72,72), forcinga_EXP2, 'color', RdYlBu(60,:), 'linewidth', 2); hold on;
 h4 = plot(linspace(1,72,72), mixinga_EXP2, 'color', antarctica(15,:), 'linewidth', 2); hold on;
 h7 = plot(linspace(1,72,72), implicit_EXP2, 'color', [187,0,187]/255, 'linewidth', 2); hold on;
-h1 = plot(linspace(1,72,72), dV_EXP2, 'color', [0 0 0], 'linewidth', 2.5); hold on;
+% h8 = plot(linspace(1,72,72), ITFa_EXP2, 'color', RdYlGn(60,:), 'linewidth', 2); hold on;
 
 hXLabel = xlabel('Month');
 hYLabel = ylabel(['[Sv]'],'interpreter','latex');    
@@ -802,7 +846,7 @@ set(gca, ...
   'XMinorTick'      , 'off'         , ...
   'YMinorTick'      , 'off'         , ...
   'YGrid'           , 'on'          , ...
-  'YTick'           , -20:5:27   , ...     % define grid, every 1000 m a grid line
+  'YTick'           , -20:10:30   , ...     % define grid, every 1000 m a grid line
   'XColor'          , RdYlBu(60,:)  , ...
   'YColor'          , RdYlBu(60,:)  , ...
   'ticklabelinterpreter', 'latex'   , ...
@@ -829,21 +873,15 @@ text([28 28],[-5 -5],'Discharge', 'interpreter', 'latex', ...
 text(-3, 31, 'd) Diabatic fluxes', 'interpreter', 'latex', 'Fontsize', 25, ...
     'color', [0 0 0]);
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ % 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ % 
 % finished fancy plot
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
 directory = 'C:/Users/Maurice Huguenin/Desktop/';
 %savefig([directory 'pnEXP1_and_pnEXP2_' f3 '_vertical_new_combined'])
 print('-dpng','-r300', [directory 'pnEXP1_and_pnEXP2_' f3 '_vertical_new_combined_test']);
 
 % 
-
-
-
-
-
-
 
 
 
