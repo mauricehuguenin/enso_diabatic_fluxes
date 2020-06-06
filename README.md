@@ -88,7 +88,7 @@ __Fig. A1__: Visualize regression patterns from the plotting_all_PC1_and_PC2_pat
 
 The model output is quite big(114 GB for the idealised simulations and 1.2 TB for the 1979-2016 hindcast simulation). To get access to the model output, please send me an email to m.huguenin-virchaux@unsw.edu.au.
 
-- __idealized El Niño__: G:/Maurice_ENSO_Data/pn_EXP1_composite_nino_windstress/ on my personal hard drive
-- __idealized La Niña__: G:/Maurice_ENSO_Data/pn_EXP2_composite_nina_windstress/ on my personal hard drive
+- __idealized El Niño__: H:/Maurice_ENSO_Data/pn_EXP1_composite_nino_windstress/ on my personal hard drive
+- __idealized La Niña__: H:/Maurice_ENSO_Data/pn_EXP2_composite_nina_windstress/ on my personal hard drive
 - __1979-2016 simulation__: mv7494@gadi.nci.org.au:/g/data/e14/mv7494/access-om2/archive/025deg_jra55_iaf/ 
 
