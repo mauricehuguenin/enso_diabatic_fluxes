@@ -362,7 +362,7 @@ end
 % save plot
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %
 set(gcf, 'color', 'w', 'PaperPositionMode', 'auto');
-directory = '/home/z5180028/MSC_thesis/access_figures/';
+directory = 'C:/Users/Maurice Huguenin/Desktop/';
 print('-dpng','-r500', [directory 'thermocline_depth_transects_including_access']);
 
 toc;
