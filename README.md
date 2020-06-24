@@ -1,7 +1,7 @@
 # enso_diabatic_fluxes
 Analysis Scripts and Data used for the publication:
 
-Huguenin, M. F., Holmes, R. M., & England, M. H. (2020). Diabatic Contributions to Warm Water Volume Variability over ENSO Events
+Huguenin, M. F., Holmes, R. M., & England, M. H. (2020). Key Role of Diabatic Processes in Regulating Warm Water Volume Variability over ENSO Events
 
 # Packages and Functions
 
