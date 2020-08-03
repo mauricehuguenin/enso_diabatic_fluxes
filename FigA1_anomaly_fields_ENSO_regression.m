@@ -24,7 +24,7 @@ h=m_pcolor(lon+360, lat, t2m_PC1);
 set(h,'linestyle','none'); hold on;
 
 m_coast('color',[.1 .1 .1]); % black coastline
-m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
+m_grid('box', 'on', 'xtick', 7, 'ytick', 5, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
     'Fontsize', 22, 'color', RdYlBu(60,:), 'linewidth', .5);
 
@@ -39,7 +39,7 @@ h = ylabel(h3, '[°C]', 'color', RdYlBu(60,:), ...
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
 text([-3.75 -3.75],[2.25 2.25],'a) Air temperature [°C]', 'fontname', 'Times New Roman', ...
-       'fontsize', 24, 'color', 'k');
+       'fontsize', 25, 'color', 'k');
 
 subplot(2,2,2); % SPECIFIC HUMIDITY
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,7 +51,7 @@ h=m_pcolor(lon+360, lat, qv_PC1);
 set(h,'linestyle','none'); hold on;
 
 m_coast('color',[.1 .1 .1]); % black coastline
-m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
+m_grid('box', 'on', 'xtick', 7, 'ytick', 5, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
     'Fontsize', 22, 'color', RdYlBu(60,:), 'linewidth', .5);
 
@@ -66,7 +66,7 @@ h = ylabel(h3, '[kg kg^{-1}]', 'color', RdYlBu(60,:), ...
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
 text([-3.75 -3.75],[2.25 2.25],'b) Specific humidity [kg kg^{-1}]', 'fontname', 'Times New Roman', ...
-       'fontsize', 24, 'color', 'k');
+       'fontsize', 25, 'color', 'k');
 
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
@@ -83,7 +83,7 @@ h=m_pcolor(lon+360, lat, ssrd_PC1);
 set(h,'linestyle','none'); hold on;
 
 m_coast('color',[.1 .1 .1]); % black coastline
-m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
+m_grid('box', 'on', 'xtick', 7, 'ytick', 5, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
     'Fontsize', 22, 'color', RdYlBu(60,:), 'linewidth', .5);
 
@@ -98,7 +98,7 @@ h = ylabel(h3, '[W m^{-2}]', 'color', RdYlBu(60,:), ...
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
 text([-3.75 -3.75],[2.25 2.25],'c) Downward short-wave [W m^{-2}]', 'fontname', 'Times New Roman', ...
-       'fontsize', 24, 'color', 'k');
+       'fontsize', 25, 'color', 'k');
 
 subplot(2,2,4); % Downward short-wave
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -111,11 +111,11 @@ set(h,'linestyle','none'); hold on;
 
 [cs, h] = m_contour(lon,lat,msl_PC1/10, [-40:10:40]);
 set(h, 'color', [.3 .3 .3]);
-clabel(cs, h);
+clabel(cs, h, 'Fontname', 'Times New Roman', 'color', RdYlBu(60,:));
 
 
 m_coast('color',[.1 .1 .1]); % black coastline
-m_grid('box', 'on', 'xtick', 7, 'ytick', 7, 'tickdir', 'in', ...
+m_grid('box', 'on', 'xtick', 7, 'ytick', 5, 'tickdir', 'in', ...
     'yaxislocation', 'left', 'Fontname', 'Times New Roman', ...
     'Fontsize', 22, 'color', RdYlBu(60,:), 'linewidth', .5);
 
@@ -130,7 +130,7 @@ h = ylabel(h3, '[hPa]', 'color', RdYlBu(60,:), ...
 set(h3, 'YTick', linspace(col_limit(1), col_limit(2), 5)); % set limit of colourbar
 
 text([-3.75 -3.75],[2.25 2.25],'d) Sea level pressure [hPa]', 'fontname', 'Times New Roman', ...
-       'fontsize', 24, 'color', 'k');
+       'fontsize', 25, 'color', 'k');
 
 
 % finish fancy plot and print
